@@ -1,0 +1,55 @@
+.checkbox .dbinput>div {
+    width: 30px !important;
+}
+
+#appreg {
+    margin-top: 80px;
+    padding: 15px;
+    background-color: white;
+    color: black;
+}
+
+.formfill>form {
+    grid-auto-flow: initial !important;
+}
+
+.frmlogo {
+    display: none !important;
+}
+
+h1 {
+    text-align: center;
+    font-size: xx-large !important;
+    margin-bottom: 10px !important;
+    font-weight: bolder !important;
+}
+
+.back {
+    margin: 10px;
+}
+
+.mainback {
+    font-weight: bolder;
+    background-color: lightblue;
+    padding: 10px;
+    grid-column: 1/-1;
+
+}
+
+.dbinput>label {
+    font-size: initial !important;
+}
+
+@media print {
+    input {
+        color: black !important;
+    }
+
+    .grating {
+        display: none;
+    }
+
+    button {
+        display: none;
+    }
+}

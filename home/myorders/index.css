@@ -1,0 +1,21 @@
+td.expand .expand-detailed {
+    width: calc(100% - 274px) !important;
+    left: 142px !important;
+}
+body {
+
+    color: black !important;
+  
+}
+.tblnavbtn>button:nth-child(4){
+    display: none;
+}
+#ortbl{
+    width: 100%;
+}
+#insisitm .tblnav{
+    display: none;
+}
+.dropdown{
+	position: relative;
+}

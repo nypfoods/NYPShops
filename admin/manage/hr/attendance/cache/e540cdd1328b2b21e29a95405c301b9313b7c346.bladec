@@ -1,0 +1,35 @@
+<vue>#node</vue>
+<tabs :tabs="['Add Attendance']" >
+	<div slot="Add Attendance" style="display: grid;grid-template-columns: 1fr"  class="grid">
+ <div class="grid" >
+ <dbinput label="Department" type="search" v-model="srcdept" sql="select * from (select 'ALL' as disp,'%' as dname UNION select dname as disp,dname from department) as department" fcol="dname"  placeholder="Department">
+ <template slot="option" slot-scope="d">
+ {{d.rval.disp}}
+ </template>
+ </dbinput>
+ <dbinput label="Date" type="date" v-model="rdate"></dbinput>
+ 
+ </div>
+ <dbtable
+ name="ptbl"
+ :sql="`select * from (select e.uname,e.fname,e.lname,e.department,IFNULL(a.attendance_status,1) as attendance_status,a.reason,e.eid from employee as e left join (select * from attendance where (working_date='${rdate}' or working_date is null) ) as a on a.eid = e.eid  where e.department like '${srcdept}%' and e.active='1') as atds`"
+ :fcol="['uname','fname','lname','department','attendance_status','reason']"
+ :dcol="{uname:'Employee Id',fname:'Name',department:'Department',reason:'Reason',attendance_status:'Attendance status'}"
+ :updkey="['eid']"
+ :freez="['uname','fname','lname','department','attendance_status']",
+ @row="log('abc');stref=false;sleep(1000).then(()=>{stref = true;log('abcclose');});"
+ >
+ <template slot="attendance_status" slot-scope="d">
+ <dbinput v-if="stref" class='atdsts' type="switch" v-model="d.rval.attendance_status"></dbinput>
+ </template>
+ <template slot="foot" slot-scope="d">
+ <tr>
+ <th colspan="7" style="text-align: right;">
+ <button type="button" style="width: fit-content" @click="submitattendace(d.row)">Submit</button>
+ </th>
+ </tr>
+ </template>
+	</dbtable>
+	</div>
+	
+</tabs>

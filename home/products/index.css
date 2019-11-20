@@ -1,0 +1,234 @@
+.tblnav,th{
+    display: none;
+}
+   .grid {
+    grid-auto-flow: inherit !important;
+        grid-template-columns: 1fr !important;
+}
+
+li.product_seperate {
+  grid-column-end:-1;
+grid-column-start:-5;
+	list-style: none;
+    width: 100% !important;
+    padding: 5px;
+    font-size: 2em;
+    margin-bottom: 10px !important;
+}
+
+li.product_seperate>h2 {
+	margin-left: auto;
+	border-bottom: 1px solid var(--primary); 
+}
+li.product {
+	margin-bottom: 1em;
+}
+
+.w3-badge {
+    padding: 4px 10px;
+    text-align: left;
+    text-indent: initial;
+    top: 5px;
+    right: 20px;
+}
+
+.filterbar {
+	position: fixed;
+    top: 80px;
+    width: 100%;
+    background: #b3282a;
+    z-index: 2;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    display: inherit;
+}
+
+.vegfilter {
+    position: relative;
+    width: fit-content;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0px 5px;
+    font-size: large;
+    font-weight: bold;
+    background: white;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.vegfilter>b {
+    padding: 8px;
+    cursor: pointer;
+    display: inline-block; 
+}
+
+.vegfilter>b.active {
+    background: rgba(0,0,0,0.2);
+}
+
+.product {
+    padding-left: 10px;
+    padding-right: 10px; 
+}
+
+@media only screen and (max-width: 1000px) {
+    .filterbar {
+        top:50px;
+    }
+    .product {
+        margin-left: auto !important;
+        margin-right: auto !important;
+
+    }
+    .w3-badge {
+        top: 0px;
+        right: 0px;
+    }
+}
+
+.filterbar>div {
+	display: inline-block;
+	padding: 10px;
+	cursor: pointer;
+}
+
+.filterbar>.active {
+	background: #00000030;
+}
+
+#cartcon.flex-fluid>* {
+    margin-left: 25px;
+}
+#cartcon {
+    background-color: #ffffffd9;
+    padding: 20px 0px;
+    border-radius: 2px;
+}
+.product {
+    max-width: fit-content;
+}
+
+#popup {
+    color: white;
+    font-weight: bolder;
+    height: auto !important;
+    bottom: 35px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 4; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  height: 80%;
+  position: relative;
+  border-radius: 3px;
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  right: 2px;
+  top: -3px;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.cd-cart-items{
+  width: 100%;
+}
+
+.crust {
+  padding: 0px 3px 5px;
+  cursor: pointer;
+}
+
+.modal-content .tabslot {
+  border-color: var(--secondary);
+}
+.modal-content .tab.active {
+  border-color: var(--secondary);
+}
+
+.crust>div {
+  padding: 5px;
+  box-shadow: 0px 1px 1px 0px grey;
+  background: white;
+}
+.crust.active>div {
+  border:2px solid var(--primary);
+}
+.crust .price {
+  text-align: right;
+  font-weight: bold;
+  display: block;
+  color: black;
+}
+
+.crust .name {
+  font-weight: bold;
+}
+
+.crustcon h3 {
+  font-size: x-large;
+  font-weight: bold;
+  margin: 15px 0px;
+  padding: 0px;
+  text-decoration: underline;
+}
+.crust .row {
+  margin: 0px;
+}
+
+.crustcon .cpqty,#productmenu .el-wrapper .a-pqty .cpqty {
+    text-align: center;
+    font-weight: bold;
+    color: var(--secondary);
+    margin: auto;
+}
+
+#productmenu .el-wrapper:hover .a-pqty {
+  bottom: 90px;
+}
+
+#productmenu .el-wrapper .a-pqty {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    display: flex;
+}
+
+#productmenu .el-wrapper .a-pqty>div {
+  margin: auto;
+}
+
+#productmenu .el-wrapper .a-pqty .cpqtylbl {
+  margin: auto;
+  color: black;
+}

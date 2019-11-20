@@ -1,0 +1,13 @@
+.limenu{
+  display: none !important;
+}
+.image-upload-wrap{
+     height: -webkit-fill-available;
+    font-size: 6em;
+}
+#imgpr{
+    margin:auto;
+   }
+input[type="number"],textarea{
+    width:100%;
+}

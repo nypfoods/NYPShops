@@ -1,0 +1,21 @@
+<vue>#node</vue>
+<tabs :tabs="['Add Counter','Assign Employee']">
+ <template slot="Add Counter">
+ <form autocomplete="off" id="myfrm" action="javascript:addcounter()" style="display: grid;grid-template-columns: 1fr 1fr 1fr 1fr 1fr">
+ <dbinput type="text" v-model="apf.cname" label="Counter Name" required>
+ </dbinput>
+ <dbinput type="submit" label=" ">ADD</dbinput>
+ </form>
+ <dbtable name="ctbl" sql="select * from counter_map" :fcol="['cname']" :dcol="{cname:'Counter Name'}" :updkey="['id']" @delete="(df)=>{df();}" :defaultcol="apf">
+ </dbtable>
+ </template>
+ <template slot="Assign Employee">
+ <form autocomplete="off" id="myfrm" action="javascript:addemployee()" class="grid">
+ <dbinput type="search" sql="select * from counter_map" fcol="cname" label="Counter Name" required @select="(val,row)=>{eapf.cname=row.cname,eapf.cid=row.id}"></dbinput>
+ <dbinput type="search" sql="select * from employee where department='IT' group by uname" fcol="fname" label="Employee Name" required @select="(val,row)=>{eapf.fname=row.fname,eapf.eid=row.eid}"></dbinput>
+ <dbinput type="submit" label="">ADD</dbinput>
+ </form>
+ <dbtable name="etbl" sql="select * from users" :fcol="['fname','uname','cname']" :dcol="{cname:'Counter Name',fname:'Employee Name',uname:'Employee Id'}" :wcol="{fname:'100px'}" :editable="false">
+ </dbtable>
+ </template>
+</tabs>

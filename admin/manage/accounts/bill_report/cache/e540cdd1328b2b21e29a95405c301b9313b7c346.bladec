@@ -1,0 +1,155 @@
+
+<tabs :tabs="['Working Cash','Today Billing','Total Counter Billing','Total Online Billing']">
+	<template slot="Working Cash">
+ <form  autocomplete="off" id="myfrm1" action="javascript:void(0)" 
+	class="grid" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr">
+ <dbinput  type="select"  label="Type " v-model="apf.type"  :options="['Working Capital','Petty Cash']" required></dbinput>
+ <dbinput v-if="apf.type=='Working Capital'" type="select" sql="select * from employee where department='IT' group by uname" fcol="fname" label="Employee"  required @select="(val,row)=>{apf.name=row.fname}"></dbinput>		
+ <dbinput v-if="apf.type=='Petty Cash'" type="select" sql="select * from counter_map  group by cname" fcol="cname" label="Counter Name"  required @select="(val,row)=>{apf.name=row.cname}"></dbinput>	
+ <dbinput  type="number" v-model="apf.working_cash" label="Cash" required>
+ </dbinput>	
+ <dbinput type="button"  @click="workingcash">ADD</dbinput>
+ </form>
+ <dbtable
+ name="ptbl"
+ sql="select * from working_cash"
+ :fcol="['type','name','working_cash','date']"
+ :dcol="{type:'Type',name:'Name',working_cash:'Cash',date:'Date'}"
+ :updkey="['id']"
+ @delete="(df)=>{df();}"
+ :defaultcol="apf"
+ >
+
+ </dbtable>
+</template>
+	<template slot="Today Billing" class="grid" style="grid-template-columns: 1fr" >
+ <button type="button" @click="updatetoday()"><i class="fa fa-arrow-right" aria-hidden="true"></i> Send Today's Billing Summery </button>
+ <div class="grid c-card">
+ <dbdata class="grid" :sql="`select sum(@pamt:=posp*pqty) as pamt,sum(@gstamt:=((posp*pqty)*(pgst/100))) as gstamt,sum(@pamt-@gstamt) as damt,DATE_FORMAT(odate, '%Y-%m-%d'),min(cpnamt) as cpnamt   from counter where DATE(odate) = CURDATE() and bilno!='0' and ordsts='S'`">
+ <template slot="row" slot-scope="d">
+ <div class="card" v-if="d.i==0">
+ <div style="height: 100%" class="cp">
+ <div class="grid" style="text-align:left;" style="grid-template-columns: 1fr">
+ <div >
+ <h2>Counter Summary</h2>
+ </div>
+ <div class="grid" style="grid-template-columns: 1fr auto">
+ <label>Sub Total Amout</label>
+ <b>{{d.indata.data.col('pamt').sum().toCur()}}</b>
+ </div>
+ <div class="grid" style="grid-template-columns: 1fr auto">
+ <label>CGST Collected</label>
+ <b>{{(d.indata.data.col('gstamt').sum()/2).toCur()}}</b>
+ </div>
+ <div class="grid" style="grid-template-columns: 1fr auto">
+ <label>SGST Collected</label>
+ <b>{{(d.indata.data.col('gstamt').sum()/2).toCur()}}</b>
+ </div>
+ <div class="grid" style="grid-template-columns: 1fr auto">
+ <label>Coupon Discounts</label>
+ <b>{{d.indata.data.col('cpnamt').sum().toCur()}}</b>
+ </div>
+ <div class="grid" style="grid-template-columns: 1fr auto">
+ <label>Total Amout</label>
+ <b>{{(d.indata.data.col('damt').sum()-d.indata.data.col('cpnamt').sum()).toCur()}}</b>
+ </div>
+ </div>
+ </div>
+ </div>
+ </template>
+ </dbdata>
+ <dbdata v-for="pmtd in ['CASH','E-WALLET','CARD','THIRD-PARTY']" class="grid" :sql="`select sum(@pamt:=posp*pqty) as pamt,sum(@gstamt:=((posp*pqty)*(pgst/100))) as gstamt,sum(@pamt-@gstamt) as damt,DATE_FORMAT(odate, '%Y-%m-%d'),min(cpnamt) as cpnamt   from counter where DATE(odate) = CURDATE() and pmtd='${pmtd}' and bilno!='0' and ordsts='S'`">
+ <template slot="row" slot-scope="d" v-if="d.indata.data.col('pamt').sum()">
+ <div class="card"  >
+ <div style="height: 100%" class="cp">
+ <div class="grid" style="text-align:left;" style="grid-template-columns: 1fr">
+ <div >
+ <h2>{{pmtd.toLowerCase().toWordCase()}} Collected</h2>
+ </div>
+ <div class="grid" style="grid-template-columns: 1fr auto">
+ <label>Sub Total Amout</label>
+ <b>{{d.indata.data.col('pamt').sum().toCur()}}</b>
+ </div>
+ <div class="grid" style="grid-template-columns: 1fr auto">
+ <label>CGST Collected</label>
+ <b>{{(d.indata.data.col('gstamt').sum()/2).toCur()}}</b>
+ </div>
+ <div class="grid" style="grid-template-columns: 1fr auto">
+ <label>SGST Collected</label>
+ <b>{{(d.indata.data.col('gstamt').sum()/2).toCur()}}</b>
+ </div>
+ <div class="grid" style="grid-template-columns: 1fr auto">
+ <label>Coupon Discounts</label>
+ <b>{{d.indata.data.col('cpnamt').sum().toCur()}}</b>
+ </div>
+ <div class="grid" style="grid-template-columns: 1fr auto">
+ <label>Total Amout</label>
+ <b>{{(d.indata.data.col('damt').sum()-d.indata.data.col('cpnamt').sum()).toCur()}}</b>
+ </div>
+ </div>
+ </div>
+ </div>
+ </template>
+ </dbdata>
+
+ <dbdata class="grid" :sql="`select sum(@pamt:=posp*pqty) as pamt,sum(@gstamt:=((posp*pqty)*(pgst/100))) as gstamt,sum(@pamt-@gstamt) as damt,DATE_FORMAT(odate, '%Y-%m-%d'),min(cpnamt) as cpnamt   from orders where DATE(odate) = CURDATE() and bilno!='0' and ordsts='S'`">
+ <template slot="row" slot-scope="d">
+ <div class="card" v-if="d.i==0">
+ <div style="height: 100%" class="cp">
+ <div class="grid" style="text-align:left;" style="grid-template-columns: 1fr">
+ <div >
+ <h2>Online Summary</h2>
+ </div>
+ <div class="grid" style="grid-template-columns: 1fr auto">
+ <label>Sub Total Amout</label>
+ <b>{{d.indata.data.col('pamt').sum().toCur()}}</b>
+ </div>
+ <div class="grid" style="grid-template-columns: 1fr auto">
+ <label>CGST Collected</label>
+ <b>{{(d.indata.data.col('gstamt').sum()/2).toCur()}}</b>
+ </div>
+ <div class="grid" style="grid-template-columns: 1fr auto">
+ <label>SGST Collected</label>
+ <b>{{(d.indata.data.col('gstamt').sum()/2).toCur()}}</b>
+ </div>
+ <div class="grid" style="grid-template-columns: 1fr auto">
+ <label>Coupon Discounts</label>
+ <b>{{d.indata.data.col('cpnamt').sum().toCur()}}</b>
+ </div>
+ <div class="grid" style="grid-template-columns: 1fr auto">
+ <label>Total Amout</label>
+ <b>{{(d.indata.data.col('damt').sum()-d.indata.data.col('cpnamt').sum()).toCur()}}</b>
+ </div>
+ </div>
+ </div>
+ </div>
+ </template>
+ </dbdata>	
+ </div>
+	</template>
+	<template slot="Total Counter Billing">
+	<dbtable
+ name="etbl"
+ sql="select * from closing_bill where type='ALL'"
+ :fcol="['sub_total','sgst','cgst','cpnamt','total','tdate']"
+ :dcol="{sub_total:'Sub Total',sgst:'SGST',cgst:'CGST',cpnamt:'Coupon',total:'Total',tdate:'Date'}"
+ :updkey="['id']"
+ :defaultcol="apf"
+ :editable="false"
+ >
+	</dbtable>
+	</template>
+	<template slot="Total Online Billing">
+	<dbtable
+ name="etbl"
+ sql="select * from closing_bill where type='ONLINE'"
+ :fcol="['sub_total','sgst','cgst','cpnamt','total','tdate']"
+ :dcol="{sub_total:'Sub Total',sgst:'SGST',cgst:'CGST',cpnamt:'Coupon',total:'Total',tdate:'Date'}"
+ :updkey="['id']"
+ :defaultcol="apf"
+ :editable="false"
+ >
+	</dbtable>
+	</template>
+</tabs>
+<vue>#node</vue>

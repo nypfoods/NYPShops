@@ -1,0 +1,109 @@
+#vedreg {
+    margin-top: 80px;
+    padding: 15px;
+    background-color: white;
+    color: black;
+}
+
+#vedreg .containers {
+    margin: auto;
+    padding: 10px;
+    max-width: 1024px;
+    background: white;
+}
+
+#venreg>form {
+    grid-auto-flow: initial;
+}
+
+#nofbusiness>label,
+#nofcompany>label {
+    font-size: large;
+    font-weight: bold;
+}
+
+#nofbusiness input[type="radio"],
+#nofcompany input[type="radio"] {
+    width: 20px !important;
+}
+
+h1 {
+    text-align: center;
+    font-size: xx-large !important;
+    margin-bottom: 10px !important;
+    font-weight: bolder !important;
+}
+
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.hdl {
+    display: none !important;
+}
+
+@media print {
+    footer {
+        display: none;
+    }
+
+    #vedreg {
+        margin-top: 0px;
+        padding: 0px;
+    }
+
+    .frmlogo {
+        display: block !important;
+    }
+
+    #logo,
+    button,
+    header,
+    #hd,
+    .hd,
+    header,
+    #main-nav {
+        display: none !important;
+    }
+
+    input,
+    textarea {
+        border-width: 0px;
+        border-bottom-width: 2px;
+        border-color: black;
+    }
+
+    .hdl {
+        display: inline-block !important;
+    }
+
+    .brk {
+        page-break-before: always;
+    }
+}
+
+.back {
+    margin: 10px;
+}
+
+.mainback {
+    font-weight: bolder;
+    text-decoration: underline;
+    background-color: ghostwhite;
+    padding: 1px 10px;
+}
+
+.dbinput>label {
+    font-size: initial;
+}
+
+input:not(:valid) {
+    border: 1px dotted red;
+}

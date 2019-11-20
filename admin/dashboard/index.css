@@ -1,0 +1,82 @@
+body .card {}
+
+body {
+    background-color: white;
+    background-image: radial-gradient(#c00a2769 9px, transparent 10px), repeating-radial-gradient(#c00a2769 0, #003b67b3 4px, transparent 5px, transparent 20px, #003b67b3 21px, #003b67b3 25px, transparent 26px, transparent 50px);
+    background-size: 30px 30px, 90px 90px;
+    background-position: 0 0;
+}
+
+.card {
+    display: flex;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    position: relative;
+    margin: 5px 0px;
+    transition: 0.3s all ease-in-out;
+    border: 1px solid #ffffff;
+    min-height: 125px;
+    background: #0000004f;
+}
+
+.card .badge {
+    position: absolute;
+    color: #003B67;
+    background-color: #ffffff;
+    box-shadow: inset 0px 0px 6px 6px #E0E0E0;
+    font-weight: bold;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 20px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid #000000;
+    top: -10px;
+    left: -10px;
+    z-index: 2;
+}
+
+.card:hover {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+.card:hover .text {
+    background-color: #e2f2fa;
+    background-image: radial-gradient(transparent, #c0e6f7, #c0e6f7, #2ac1f4);
+    color: #000000;
+    font-weight: bolder;
+}
+
+.card .icon {
+    background-color: #b3282a;
+    color: #ffffff;
+    font-size: 35px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    box-shadow: 5px 0px 12px -4px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.card>div {
+    padding: 30px 15px;
+    transition: 0.3s all ease-in-out;
+    display: flex;
+    align-items: center;
+}
+
+.card .text {
+    width: -webkit-fill-available;
+    background-color: #131363;
+    color: #ffffff;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    text-transform: uppercase;
+    font-size: large;
+    display: grid;
+    text-align: center;
+}

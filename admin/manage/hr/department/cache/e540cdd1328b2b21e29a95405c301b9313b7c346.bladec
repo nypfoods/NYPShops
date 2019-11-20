@@ -1,0 +1,24 @@
+<vue>#node</vue>
+<tabs :tabs="['Add Department']">
+	<template slot="Add Department">
+ <form  autocomplete="off" id="myfrm" action="javascript:void(0)" 
+ style="display: grid;grid-template-columns: 1fr 1fr 1fr 1fr 1fr">
+ <dbinput  type="text" v-model="apf.dname" label="Department" required>
+ </dbinput>			
+ <dbinput type="button" label="" @click="adddesignation">ADD</dbinput>
+ </form>
+<dbtable
+name="etbl"
+sql="select * from department"
+:fcol="['dname']"
+:dcol="{dname:'Department'}"
+:updkey="['did']"
+@delete="(df)=>{df();}"
+@onadd="function(df,dcol){findcol=dcol;onappemp=df}"
+:defaultcol="apf"
+>
+
+</dbtable>
+</template>
+
+</tabs>

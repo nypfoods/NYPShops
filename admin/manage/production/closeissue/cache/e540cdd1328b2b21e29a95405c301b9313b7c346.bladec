@@ -1,0 +1,72 @@
+<tabs :tabs="['Issued Items','Closed Items']" @ontab="handelTab">
+	<template slot="Issued Items">
+	<dbtable
+ name="ptbl"
+ sql="select pid,isid,isno,idate,GROUP_CONCAT(pname) as pname,GROUP_CONCAT(psz) as psz,GROUP_CONCAT(pcat) as pcat,GROUP_CONCAT(ptype) as ptype,GROUP_CONCAT(pqty) as pqty,isid as cancel from issueitem where status='S' group by isno"
+ :fcol="['isno','idate']"
+ :dcol="{isno:'Issue #',idate:'Date'}"
+ :updkey="['isid']"
+ :defaultcol="apf"
+ :editable="false"
+ @expand="()=>{}"
+ >
+
+ <div slot="detailed" slot-scope="d">
+ <dbtable
+ name="insisitm"
+ :sql="`select *,isid as cancel from issueitem where isno = '${d.rval.isno}' and status='S'`"
+ :fcol="['pname','pqty','rqty','pdesc','cancel']"
+ :dcol="{pname:'Product Name',pqty:'Qty',pdesc:'Description',rqty:'Remaining Qty',cancel:'Action'}"
+ :editable="false"
+ >
+ <template slot="pname" slot-scope="d">
+ <div style="position: relative;">
+ <img :src="get_url(`upload/rawprodimage/${d.rval['pid']}/pimage.png`)" width="50px">
+             <div style="display: inline-block;position: absolute;margin-left: 5px;">
+                 <div>{{d.rval.pname}}</div>
+                 <div>S : {{d.rval.psz}} | C : {{d.rval.pcat}} |  T : {{d.rval.ptype}}</div>
+             </div>
+         </div>  
+ </template>
+ <template slot="cancel" slot-scope="d">
+ <button  @click="addissue(d.rval.cancel,'cancel',d.rval,ptbl.vue)" >Close Item</button>
+ </template>
+ </dbtable>
+ </div>
+ </dbtable>
+	</template>
+	<template slot="Closed Items">
+	<dbtable
+ name="ptbl"
+ sql="select pid,isid,isno,idate,GROUP_CONCAT(pname) as pname,GROUP_CONCAT(psz) as psz,GROUP_CONCAT(pcat) as pcat,GROUP_CONCAT(ptype) as ptype,GROUP_CONCAT(pqty) as pqty,isid as cancel from issueitem where status='CLS' group by isno"
+ :fcol="['isno','idate']"
+ :dcol="{isno:'Issue #',idate:'Issued Date'}"
+ :updkey="['isid']"
+ :defaultcol="apf"
+ :editable="false"
+ @expand="()=>{}"
+ >
+
+ <div slot="detailed" slot-scope="d">
+ <dbtable
+ name="insisitm"
+ :sql="`select * from issueitem where isno = '${d.rval.isno}' and status='CLS'`"
+ :fcol="['pname','pdesc','cdate']"
+ :dcol="{pname:'Product Name',pdesc:'Description',cdate:'Closed Date'}"
+ :editable="false"
+ >
+ <template slot="pname" slot-scope="d">
+ <div style="position: relative;">
+ <img :src="get_url(`upload/rawprodimage/${d.rval['pid']}/pimage.png`)" width="50px">
+             <div style="display: inline-block;position: absolute;margin-left: 5px;">
+                 <div>{{d.rval.pname}}</div>
+                 <div>S : {{d.rval.psz}} | C : {{d.rval.pcat}} |  T : {{d.rval.ptype}}</div>
+             </div>
+         </div>  
+ </template>
+ </dbtable>
+ </div>
+ </dbtable>
+	</template>
+</tabs>
+<vue>#node</vue>

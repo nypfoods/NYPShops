@@ -1,0 +1,48 @@
+<clearnav></clearnav>
+<div class="row">
+ <?php 
+ if(($_REQUEST["invtype"]=='counter') || ($_REQUEST["invtype"]=='online')){
+ include('screen/admin/manage/invoice/dsg/gen.php');  
+ }  
+ else if(($_REQUEST["invtype"]=='quotation')){
+ include('screen/admin/manage/invoice/dsg/quotation.php');  
+ }   
+ else if(($_REQUEST["invtype"]=='offer')){
+ include('screen/admin/manage/invoice/dsg/offerletter.php');  
+ }   
+ else if(($_REQUEST["invtype"]=='null') && ($_REQUEST["ordmethod"]=='purchase')){
+ 
+ include('screen/admin/manage/invoice/dsg/purchase.php');
+ }
+ else if(($_REQUEST["invtype"]=='null') && ($_REQUEST["ordmethod"]=='purchasebill')){
+ 
+ include('screen/admin/manage/invoice/dsg/purbill.php');
+ }
+ else if(($_REQUEST["invtype"]=='null') && ($_REQUEST["ordmethod"]=='utility')){
+ include('screen/admin/manage/invoice/dsg/utility.php');
+ }
+ else if(($_REQUEST["invtype"]=='null') && ($_REQUEST["ordmethod"]=='catering')){
+ include("screen/admin/manage/invoice/dsg/catering.php");
+ } 
+ else  if($_REQUEST["invtype"]=='emailbill') {
+ include("screen/admin/manage/invoice/dsg/emailbill.php");
+ } 
+ else  if($_REQUEST["invtype"]=='itemrequest') {
+ include("screen/admin/manage/invoice/dsg/itemrequest.php");
+ } 
+ else  if($_REQUEST["invtype"]=='sendCredentials') {
+ include("screen/admin/manage/invoice/dsg/sendcredentials.php");
+ } 
+
+ ?>
+ <?php if(isset($_REQUEST["print"])) { ?>
+ <script type="application/javascript">
+ window.onload = () => {
+ window.print();
+ setTimeout(() => {
+ window.close();
+ }, 1000);
+ };
+ </script>
+ <?php } ?>
+</div>

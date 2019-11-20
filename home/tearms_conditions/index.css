@@ -1,0 +1,17 @@
+#vedreg {
+	margin-top: 80px;
+	padding: 15px;
+	background-color: white;
+	color: black;
+}
+
+h1 {
+	text-align: center;
+    font-size: xx-large !important;
+    margin-bottom: 10px !important;
+    font-weight: bolder !important;
+}
+
+body,#node {
+	background: white !important;
+}

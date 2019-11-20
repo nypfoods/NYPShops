@@ -1,0 +1,40 @@
+.bg-login-image {
+	background: url(?path=/res/img/ico_logo.png);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.first-btn{
+    background:#ff0024;
+}
+
+.card {
+	padding: <?=2?>em;
+    margin-top: 15%;
+    /*background: url("?path=/res/img/wood.jpg");*/
+    background:#2b3990;
+}
+.card legend,.card small {
+	color: #eff8fe  !important;
+}
+.card .input{
+	margin-bottom: 10px; 
+}
+.lgform {
+	
+}
+
+.window {
+   
+    background: #fff !important;
+   
+}
+
+
+
+@media only screen and (max-width: 900px) {
+	.bg-login-image {
+			height: 35%;
+	}
+}

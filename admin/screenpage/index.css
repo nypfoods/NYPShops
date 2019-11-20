@@ -1,0 +1,10 @@
+.tabs>div>ul>li:first-child {
+    margin-left: auto;
+    margin-right: 0px;
+}
+.dbinput {
+    margin-left: 10px;
+}
+.smallswitch {
+	
+}

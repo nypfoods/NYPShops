@@ -1,0 +1,67 @@
+#empreg {
+    padding: 15px;
+    background-color: white;
+    color: black;
+}
+
+.tblnav {
+    display: none;
+}
+
+.formfill>form {
+    grid-auto-flow: initial !important;
+}
+
+.frmlogo {
+    display: none !important;
+}
+
+h1 {
+    text-align: center;
+    font-size: xx-large !important;
+    margin-bottom: 10px !important;
+    font-weight: bolder !important;
+}
+
+.back {
+    margin: 10px;
+}
+
+.mainback {
+    font-weight: bolder;
+    background-color: lightblue;
+    padding: 10px;
+    grid-column: 1/-1;
+
+}
+
+.dbinput>label {
+    font-size: initial !important;
+}
+
+@media print {
+    .frmlogo {
+        display: block !important;
+    }
+
+    #logo,
+    button,
+    header {
+        display: none !important;
+    }
+
+    input,
+    textarea {
+        border-width: 0px;
+        border-bottom-width: 2px;
+        border-color: black;
+    }
+}
+
+.grid {
+    grid-auto-flow: inherit !important;
+}
+
+#pexp .dbinput input {
+    width: 100% !important;
+}

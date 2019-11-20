@@ -1,0 +1,41 @@
+.dbinput {
+    padding: 0px 10px;
+}
+
+#upimg .uid {
+    width: 300px !important;
+}
+
+#upimg .aadhar {
+    width: 300px !important;
+}
+
+#upimg .pan {
+    width: 300px !important;
+}
+
+#upimg .bank {
+    width: 300px !important;
+}
+
+#upimg .dl {
+    width: 300px !important;
+}
+
+.ullist {
+    max-height: 100px !important
+}
+
+.tc .switch-button.enabled {
+    background: green;
+}
+
+.pen {
+    color: red;
+    font-weight: bold;
+}
+
+.comp {
+    color: green;
+    font-weight: bold;
+}

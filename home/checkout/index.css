@@ -1,0 +1,71 @@
+main {
+	background: white !important;
+}
+
+@media only screen and (max-width: 1000px) {
+    .cartpage {
+        top:50px;
+    }
+}
+
+.cartpage {
+	position: relative;
+    width: fit-content;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.tblnav {
+	display: none;
+}
+.pimg {
+	width: 100px;
+}
+
+.crtfrm input[type="number"] {
+	width: 100%;
+}
+
+.crtfrm textarea {
+	width: 100%;
+}
+
+.product-thumbnail {
+	display: grid;
+	grid-template-columns: 100px 1fr;
+}
+.productDiscription {
+	padding-left: 10px;
+}
+
+#crttble .pqty,#crttble .pamt,#crttble .pamt+td {
+	position: relative;
+	height: 100%;
+	vertical-align: middle;
+}
+
+.title {
+	padding-bottom: 10px;
+	border-bottom: 2px solid;
+}
+
+.card {
+	padding-left: 20px;
+	padding-right: 20px;
+	box-shadow: 1px 1px 1px 1px;
+}
+
+.crtfrm .dbinput label {
+	font-size: medium !important;
+}
+.tblcardhead{
+	display: none;
+}
+
+#payment_method_paypal input:focus{
+	outline: none;
+}
+
+input[type="radio"] {
+	outline: none !important;
+}

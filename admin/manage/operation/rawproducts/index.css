@@ -1,0 +1,7 @@
+.tc .switch-button.enabled {
+    background: green;
+}
+
+.tc .switch-button {
+    background: red;
+}

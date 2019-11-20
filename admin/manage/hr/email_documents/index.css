@@ -1,0 +1,25 @@
+#appreg {
+    margin-top: 80px;
+    padding: 15px;
+    background-color: white;
+    color: black;
+}
+
+.nme {
+    position: relative;
+    bottom: 34px;
+    left: 39px;
+    width: 250px;
+}
+
+.lhla4 {
+    background-image: url('<?=get_url("/res/images/LH-A4L.png")?>');
+    background-size: 100% 100%;
+}
+
+#appreg .container {
+    padding-top: 2.5in;
+    padding-left: 0.5in;
+    padding-right: 0.5in;
+    text-align: justify;
+}

@@ -1,0 +1,102 @@
+<?php include("screen/home/carthead.php"); ?>
+<clearnav></clearnav>
+<vue>#node</vue>
+<div id="empreg">
+    <div class="container" style="margin-bottom: 40px;">
+        <tabs name="crtchk" :tabs="chktbs" @ontab="(t)=>{chktbs=(t==0)?['Openings']:chktbs}">
+            <div slot="Openings">
+                <dbtable name="ptbl" class="col" sql="select *,id as jobdetail from job_board where status='1'   order by regtime desc" :fcol="['jobdetail']" :dcol="dcol" :updkey="['id']" :editable="false" selectable="true" tablenav="false" v-model="job">
+                    <div slot="jobdetail" slot-scope="d" style="line-height: 35px;">
+                        <b>Department</b> : {{d.rval.department}}<br>
+                        <b>Designation</b> : {{d.rval.designation}}<br>
+                        <b>Title</b> : {{d.rval.title}}<br>
+                        <b>Skill</b> : {{d.rval.skill}}<br>
+                        <b>Description</b> : {{d.rval.description}}<br>
+                        <dbinput type="button" class="fit" @click="()=>{chktbs=['Openings','Apply Form'];crtchk.vue.tabindex = 1;}">Apply Now</dbinput>
+                    </div>
+                </dbtable>
+            </div>
+            <div slot="Apply Form">
+                <div class="container" v-if="job.department">
+                    <h1 class="frmlogo">
+                        <img src="<?=get_url('res/images/logo.png')?>" style="width: 100px;object-fit: contain;">
+                    </h1>
+                    <form autocomplete="off" name="myfrm" action="javascript:addemployee()" @invalid="" @onnext="" class="grid">
+                        <div class="mainback">
+                            <div class="back"><b>Personal Details</b></div>
+                        </div>
+                        <div class="gridfrfr" style="grid-column: 1/-1;">
+                            <div>
+                                <div class="gridfrfr">
+                                    <b>Department</b>
+                                    <div>{{job.department}}</div>
+                                </div>
+                                <div class="gridfrfr">
+                                    <b>Designation</b>
+                                    <div>{{job.designation}}</div>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <dbinput type="file" label="Upload Profile" :upload="`upload/employee/onlineforms/temp/${ssid}/`" filename="pp.png" style="width:250px;height: 250px" name="imgpr" @onerror="(obj)=>{obj.src=get_url('res/images/demo.png')}" @upload="(tpath,src)=>{tempf['pp']=tpath}" @created="(obj)=>{imgobj['pp']=obj;}" @amounted="(obj)=>{tempf['pp']=obj.tpath}"></dbinput>
+                            </div>
+                        </div>
+                        <dbinput type="text" label="First Name " v-model="apf.fname" required></dbinput>
+                        <dbinput type="text" label="Last Name " v-model="apf.lname" required></dbinput>
+                        <dbinput type="email" label="Email" v-model="apf.email" required></dbinput>
+                        <dbinput type="mob" label="Mobile Number" v-model="apf.mnumber" required></dbinput>
+                        <dbinput type="date" label="DOB" v-model="apf.dob" required></dbinput>
+                        <dbinput type="select" label="Gender " v-model="apf.gender" :options="['Male','Female']" required></dbinput>
+                        <dbinput type="select" label="Merital Status " v-model="apf.merital_status" :options="['Married','Single']" required></dbinput>
+                        <dbinput type="textarea" label="Address" v-model="apf.address1" required></dbinput>
+                        <dbinput type="select" :setval="apf.country" sql="select * from countries" fcol="country" label="Country" required @select="(val,row)=>{apf.country=row.country}"></dbinput>
+                        <dbinput type="search" :setval="apf.state" :sql="stsql" fcol="state" label="State" required @select="(val,row)=>{apf.state=row.state}"></dbinput>
+                        <dbinput type="search" :setval="apf.city" :sql="cisql" fcol="city" label="City" required @select="(val,row)=>{apf.city=row.city}"></dbinput>
+                        <div class="mainback">
+                            <div class="back"><b>Professional Experience</b></div>
+                        </div>
+                        <table style="grid-column: 1/-1" class="table" id="pexp">
+                            <thead>
+                                <th v-for="th in ['Sl','Previous Company','From','To','Department','Designation']" :style="['From','To'].includes(th)?'width: 150px':''">
+                                    {{th}}
+                                </th>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(n,i) in compnum">
+                                    <td>{{i+1}}</td>
+                                    <td>
+                                        <dbinput type="name" v-model="pcompany[i]"></dbinput>
+                                    </td>
+                                    <td style="width:150px">
+                                        <dbinput type="date" v-model="pfrom[i]"></dbinput>
+                                    </td>
+                                    <td style="width:150px">
+                                        <dbinput type="date" v-model="pto[i]"></dbinput>
+                                    </td>
+                                    <td>
+                                        <dbinput type="name" v-model="pdepartment[i]"></dbinput>
+                                    </td>
+                                    <td>
+                                        <dbinput type="name" v-model="pdesignation[i]"></dbinput>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" style="text-align: right;">
+                                        <button type="button" @click="compnum++;" style="width:fit-content">+Add</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <dbinput type="number" label="Experience" v-model="apf.exp" required></dbinput>
+                        <dbinput name="fregapl" timeout="30000" type="file" label="Upload Resume *" :upload="`/upload/employee/onlineforms/temp/${ssid}/`" filename="employee_registration.pdf" formate="application" ftype="pdf" style="height: 200px">
+                        </dbinput>
+                        <dbinput type="time" label="Best Time to contact" v-model="apf.btc" required></dbinput>
+                        <!-- <div></div> -->
+                        <dbinput type="submit" label=" " value="">Submit</dbinput>
+                    </form>
+                </div>
+            </div>
+        </tabs>
+    </div>
+</div>
+<div id="cd-shadow-layer"></div>
+<?php include('screen/home/footer.php'); ?>

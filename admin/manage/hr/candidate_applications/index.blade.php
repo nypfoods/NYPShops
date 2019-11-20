@@ -1,0 +1,522 @@
+<vue>#node</vue>
+<div>
+    <button class="pupbtn fit" type="button" @click="popup=!popup;">
+        Hiring Summary
+    </button>
+    <div v-show="popup" class="popup">
+        <div style="position: relative;">
+            <i class="fa fa-times cp clsicon" @click="popup=!popup;"></i>
+        </div>
+        <dbtable name="tlist" sql="select department,SUM(case when complete = 1 then 1 else 0 end) as selected,SUM(case when reject = 1 then 1 else 0 end) as rejected,count(fname) as applied from online_employee group by department" :fcol="['department','applied','selected','rejected']" :dcol="{department:'Department',applied:'Applied',selected:'Selected',rejected:'Rejected'}" :editable='false'>
+        </dbtable>
+    </div>
+</div>
+<tabs :tabs="filterTabs()">
+    <template slot="Applications">
+        <dbtable :sql="getsql('app')" :fcol="['edtl','processing','t1','t2','management','verification','protype']" :dcol="{edtl:'Candidate Details',processing:'Processing',management:'Management',verification:'Hr(salary & verification)',t1:'Technical 1',t2:'Technical 2',protype:'Phase'}" :updkey="['oeid']" @delete="(df)=>{df();}" :freez="hrfreez" @expand="()=>{}" @delrow="(row,i)=>{delerowfiles(row,i,'employee')}" :attrs="reattrs" name="clist">
+            <div slot="protype" slot-scope="d">
+                <div v-if="d.rval.protype == 'processing'">
+                    Processing
+                </div>
+                <div v-if="d.rval.protype == 't1'">
+                    Technical 1
+                </div>
+                <div v-if="d.rval.protype == 't2'">
+                    Technical 2
+                </div>
+                <div v-if="d.rval.protype == 'management'">
+                    Management
+                </div>
+                <!--  <div v-if="d.rval.protype == 'practical'">
+                    Practical
+                </div> -->
+                <div v-if="d.rval.protype == 'verification'">
+                    Hr(salary & verification)
+                </div>
+            </div>
+            <div slot="edtl" slot-scope="d">
+                Name : {{d.rval.fname}}<br>
+                ID:{{d.rval.uname}}<br>
+                Department : {{d.rval.department}}<br>
+                Designation : {{d.rval.designation}}<br>
+                Mobile Number : {{d.rval.mnumber}}<br>
+                <button type="button" @click="window.open(`http://online.new-yorkpizza.com/index.php?get=true&path=upload/employee/onlineforms/${d.rval['oeid']}/employee_registration.pdf`)" style="width:100px">Open</button>
+            </div>
+            <div slot="processing-disp" slot-scope="d">
+                <div class="fgrid">
+                    <div v-for="val in getJstatus(d.rval.processing.json(),'processing',d.i)">
+                        <dbinput type="label" :label="val">
+                            <div v-if="jstatus.processing[d.i][val]=='Pending'" class="pen">
+                                Pending
+                            </div>
+                            <div v-else-if="jstatus.processing[d.i][val]=='Completed'" class="comp">
+                                Completed
+                            </div>
+                            <div v-else>
+                                {{jstatus.processing[d.i][val]}}
+                            </div>
+                        </dbinput>
+                    </div>
+                </div>
+            </div>
+            <div slot="processing-edit" slot-scope="d">
+                <div>
+                    <dbinput type="select" label="Process" :options="['Short Listed','Rejected']" required @select="(v)=>{jstatus.processing[d.i].process=v; jstatus=Object.assign({},jstatus);}">
+                    </dbinput>
+                    <dbinput v-if="jstatus.processing[d.i].process=='Short Listed'" v-model="jstatus.processing[d.i].type" type="select" label="Phase" :options="['Technical 1','Technical 2','Management','Hr(salary & verification)']" required></dbinput>
+                    <dbinput v-model="jstatus.processing[d.i].remarks" type="textarea" label="Remarks">
+                    </dbinput>
+                    <button type="button" @click="()=>{validform(t$('#clist_id'+d.i).find('.processing')).then((f)=>{f?d.updateItem(null,JSON.stringify(jstatus.processing[d.i]),'processing',d.rval,d.i):'';clist.vue.fetchData();rlist.vue.fetchData();alist.vue.fetchData();})}">Proceed</button>
+                </div>
+            </div>
+            <div slot="t1-disp" slot-scope="d">
+                <div class="fgrid">
+                    <div v-for="val in getJstatus(d.rval.t1.json(),'t1',d.i)">
+                        <dbinput type="label" :label="val">
+                            <div v-if="jstatus.t1[d.i][val]=='Pending'" class="pen">
+                                Pending
+                            </div>
+                            <div v-else-if="jstatus.t1[d.i][val]=='Completed'" class="comp">
+                                Completed
+                            </div>
+                            <div v-else>
+                                {{jstatus.t1[d.i][val]}}
+                            </div>
+                        </dbinput>
+                    </div>
+                </div>
+            </div>
+            <div slot="t1-edit" slot-scope="d">
+                <div>
+                    <dbinput type="select" label="Process" :options="['Short Listed','Rejected']" required @select="(v)=>{jstatus.t1[d.i].process=v; jstatus=Object.assign({},jstatus);}"></dbinput>
+                    <dbinput v-if="jstatus.t1[d.i].process=='Short Listed'" v-model="jstatus.t1[d.i].type" type="select" label="Phase" :options="['Processing','Technical 2','Management','Hr(salary & verification)']" required></dbinput>
+                    <dbinput v-model="jstatus.t1[d.i].remarks" type="textarea" label="Remarks">
+                    </dbinput>
+                    <button type="button" @click="()=>{validform(t$('#clist_id'+d.i).find('.t1')).then((f)=>{f?d.updateItem(null,JSON.stringify(jstatus.t1[d.i]),'t1',d.rval,d.i):'';clist.vue.fetchData();rlist.vue.fetchData();alist.vue.fetchData();})}">Proceed</button>
+                </div>
+                <!-- ''; -->
+            </div>
+            <div slot="t2-disp" slot-scope="d">
+                <div class="fgrid">
+                    <div v-for="val in getJstatus(d.rval.t2.json(),'t2',d.i)">
+                        <dbinput type="label" :label="val">
+                            <div v-if="jstatus.t2[d.i][val]=='Pending'" class="pen">
+                                Pending
+                            </div>
+                            <div v-else-if="jstatus.t2[d.i][val]=='Completed'" class="comp">
+                                Completed
+                            </div>
+                            <div v-else>
+                                {{jstatus.t2[d.i][val]}}
+                            </div>
+                        </dbinput>
+                    </div>
+                </div>
+            </div>
+            <div slot="t2-edit" slot-scope="d">
+                <div>
+                    <dbinput type="select" label="Process" :options="['Short Listed','Rejected']" required @select="(v)=>{jstatus.t2[d.i].process=v; jstatus=Object.assign({},jstatus);}"></dbinput>
+                    <dbinput v-if="jstatus.t2[d.i].process=='Short Listed'" v-model="jstatus.t2[d.i].type" type="select" label="Phase" :options="['Processing','Technical 1','Management','Hr(salary & verification)']" required></dbinput>
+                    <dbinput v-model="jstatus.t2[d.i].remarks" type="textarea" label="Remarks">
+                    </dbinput>
+                    <button type="button" @click="()=>{validform(t$('#clist_id'+d.i).find('.t2')).then((f)=>{f?d.updateItem(null,JSON.stringify(jstatus.t2[d.i]),'t2',d.rval,d.i):'';clist.vue.fetchData();rlist.vue.fetchData();alist.vue.fetchData();})}">Proceed</button>
+                </div>
+            </div>
+            <div slot="management-disp" slot-scope="d">
+                <div class="fgrid">
+                    <div v-for="val in getJstatus(d.rval.management.json(),'management',d.i)">
+                        <dbinput type="label" :label="val">
+                            <div v-if="jstatus.management[d.i][val]=='Pending'" class="pen">
+                                Pending
+                            </div>
+                            <div v-else-if="jstatus.management[d.i][val]=='Completed'" class="comp">
+                                Completed
+                            </div>
+                            <div v-else>
+                                {{jstatus.management[d.i][val]}}
+                            </div>
+                        </dbinput>
+                    </div>
+                </div>
+            </div>
+            <div slot="management-edit" slot-scope="d">
+                <div>
+                    <dbinput type="select" label="Process" :options="['Short Listed','Rejected']" required @select="(v)=>{jstatus.management[d.i].process=v; jstatus=Object.assign({},jstatus);}"></dbinput>
+                    <dbinput v-if="jstatus.management[d.i].process=='Short Listed'" v-model="jstatus.management[d.i].type" type="select" label="Phase" :options="['Processing','HR','Technical 1','Technical 2','Hr(salary & verification)']" required></dbinput>
+                    <dbinput v-model="jstatus.management[d.i].remarks" type="textarea" label="Remarks">
+                    </dbinput>
+                    <button type="button" @click="()=>{validform(t$('#clist_id'+d.i).find('.management')).then((f)=>{f?d.updateItem(null,JSON.stringify(jstatus.management[d.i]),'management',d.rval,d.i):'';clist.vue.fetchData();rlist.vue.fetchData();alist.vue.fetchData();})}">Proceed</button>
+                </div>
+            </div>
+            <div slot="verification-disp" slot-scope="d">
+                <div class="fgrid">
+                    <div v-for="val in getJstatus(d.rval.verification.json(),'verification',d.i)">
+                        <dbinput type="label" :label="val">
+                            <div v-if="jstatus.verification[d.i][val]=='Pending'" class="pen">
+                                Pending
+                            </div>
+                            <div v-else-if="jstatus.verification[d.i][val]=='Completed'" class="comp">
+                                Completed
+                            </div>
+                            <div v-else>
+                                {{jstatus.verification[d.i][val]}}
+                            </div>
+                        </dbinput>
+                    </div>
+                </div>
+            </div>
+            <div slot="verification-edit" slot-scope="d">
+                <div>
+                    <dbinput type="select" label="Process" :options="['Selected','Rejected']" required @select="(v)=>{jstatus.verification[d.i].process=v; jstatus=Object.assign({},jstatus);}"></dbinput>
+                    <dbinput v-if="jstatus.verification[d.i].process=='Selected'" v-model="jstatus.verification[d.i].joindate" type="date" label="Joining Date" required :config="{disable:[(d)=>{return d.getTime()<(new Date(subDay())).getTime();}]}"></dbinput>
+                    <dbinput v-if="jstatus.verification[d.i].process=='Selected'" v-model="jstatus.verification[d.i].location" type="text" label="Location" required></dbinput>
+                    <dbinput v-if="jstatus.verification[d.i].process=='Selected'" sql="select * from package" fcol="pkgname" fkey="pkgid" type="select" label="Package" required @select="(v,r)=>{jstatus.verification[d.i].pkgid=r.pkgid;jstatus.verification[d.i].pkgname=r.pkgname}"></dbinput>
+                    <dbinput v-if="jstatus.verification[d.i].process=='Selected'" v-model="jstatus.verification[d.i].salary" type="number" label="Salary" required></dbinput>
+                    <button type="button" @click="()=>{validform(t$('#clist_id'+d.i).find('.verification')).then((f)=>{f?d.updateItem(null,JSON.stringify(jstatus.verification[d.i]),'verification',d.rval,d.i):'';clist.vue.fetchData();rlist.vue.fetchData();alist.vue.fetchData();})}">Proceed</button>
+                </div>
+            </div>
+            <template slot="detailed" slot-scope="d">
+                <div class="gridautofr">
+                    <div class="middle">
+                        <span style="padding: 4px;border:4px solid lightgrey;border-radius: 4px;">
+                            <img style="height: 1.5in;width: 1.5in" :src="get_url(`upload/employee/onlineforms/${d.rval.oeid}/pp.png`)" />
+                        </span>
+                    </div>
+                    <formfill action="javascript:alert('submited');" :fcol="Object.filter(d.rval,[],['oeid','epwd','resume','management','enum','regtime','updtime','pfrom','pto','pdesignation','pdepartment','pdf','processing','t1','t2','verification','approve','job_id','protype','reject','complete','practical','hr','edtl','offer'],updemp.fval)" :dcol="Object.assign(updemp.dcol,{pcompany:' '})" :attrs="updemp.attrs" :visible="{pcompany:false}">
+                        <template slot="pcompany_pre-content">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Sl</th>
+                                        <th>Previous Company Name</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Department</th>
+                                        <th>Designation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(val,i) in d.rval.pcompany.split(',')">
+                                        <td>{{i+1}}</td>
+                                        <td>{{val}}</td>
+                                        <td>{{d.rval.pfrom.split(',')[i]}}</td>
+                                        <td>{{d.rval.pto.split(',')[i]}}</td>
+                                        <td>{{d.rval.pdepartment.split(',')[i]}}</td>
+                                        <td>{{d.rval.pdesignation.split(',')[i]}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </template>
+                    </formfill>
+                </div>
+            </template>
+        </dbtable>
+    </template>
+    <template slot="Approved List">
+        <dbtable :sql="getapprlsql()" :fcol="['edtl','processing','t1','t2','management','verification','protype','offer']" :dcol="{edtl:'Candidate Details',management:'Management',processing:'Processing',verification:'Hr(salary & verification)',t1:'Technical 1',t2:'Technical 2',protype:'Phase',offer:'Offer Letter'}" :updkey="['oeid']" @expand="()=>{}" :editable="false" name="alist">
+            <div slot="offer" slot-scope="d" style="display: grid;grid-template-columns: 1fr 1fr">
+                <button class="btn btn-primary mx-1" @click="sendoffer(d.rval['oeid'],'view','offer')">
+                    <i class="material-icons">print</i>
+                </button>
+                <button class="btn btn-primary" @click="sendoffer(d.rval['oeid'],'email','offer')">
+                    <i class="material-icons">email</i>
+                </button>
+            </div>
+            <div slot="protype" slot-scope="d">
+                <div v-if="d.rval.protype == 'processing'">
+                    Processing
+                </div>
+                <div v-if="d.rval.protype == 't1'">
+                    Technical 1
+                </div>
+                <div v-if="d.rval.protype == 't2'">
+                    Technical 2
+                </div>
+                <div v-if="d.rval.protype == 'management'">
+                    Management
+                </div>
+                <div v-if="d.rval.protype == 'verification'">
+                    Hr(salary & verification
+                </div>
+            </div>
+            <div slot="edtl" slot-scope="d">
+                Name : {{d.rval.fname}}<br>
+                ID:{{d.rval.uname}}<br>
+                Department : {{d.rval.department}}<br>
+                Designation : {{d.rval.designation}}<br>
+                Mobile Number : {{d.rval.mnumber}}<br>
+                <button type="button" @click="window.open(`http://online.new-yorkpizza.com/index.php?get=true&path=upload/employee/onlineforms/${d.rval['oeid']}/employee_registration.pdf`)" style="width:100px">Open</button>
+            </div>
+            <div slot="processing-disp" slot-scope="d">
+                <div class="fgrid">
+                    <div v-for="val in getJstatus(d.rval.processing.json(),'processing',d.i,'ajstatus')">
+                        <dbinput type="label" :label="val">
+                            <div v-if="ajstatus.processing[d.i][val]=='Pending'" class="pen">
+                                Pending
+                            </div>
+                            <div v-else-if="ajstatus.processing[d.i][val]=='Completed'" class="comp">
+                                Completed
+                            </div>
+                            <div v-else>
+                                {{ajstatus.processing[d.i][val]}}
+                            </div>
+                        </dbinput>
+                    </div>
+                </div>
+            </div>
+            <div slot="management-disp" slot-scope="d">
+                <div class="fgrid">
+                    <div v-for="val in getJstatus(d.rval.management.json(),'management',d.i,'ajstatus')">
+                        <dbinput type="label" :label="val">
+                            <div v-if="ajstatus.management[d.i][val]=='Pending'" class="pen">
+                                Pending
+                            </div>
+                            <div v-else-if="ajstatus.management[d.i][val]=='Completed'" class="comp">
+                                Completed
+                            </div>
+                            <div v-else>
+                                {{ajstatus.management[d.i][val]}}
+                            </div>
+                        </dbinput>
+                    </div>
+                </div>
+            </div>
+            <div slot="t1-disp" slot-scope="d">
+                <div class="fgrid">
+                    <div v-for="val in getJstatus(d.rval.t1.json(),'t1',d.i,'ajstatus')">
+                        <dbinput type="label" :label="val">
+                            <div v-if="ajstatus.t1[d.i][val]=='Pending'" class="pen">
+                                Pending
+                            </div>
+                            <div v-else-if="ajstatus.t1[d.i][val]=='Completed'" class="comp">
+                                Completed
+                            </div>
+                            <div v-else>
+                                {{ajstatus.t1[d.i][val]}}
+                            </div>
+                        </dbinput>
+                    </div>
+                </div>
+            </div>
+            <div slot="t2-disp" slot-scope="d">
+                <div class="fgrid">
+                    <div v-for="val in getJstatus(d.rval.t2.json(),'t2',d.i,'ajstatus')">
+                        <dbinput type="label" :label="val">
+                            <div v-if="ajstatus.t2[d.i][val]=='Pending'" class="pen">
+                                Pending
+                            </div>
+                            <div v-else-if="ajstatus.t2[d.i][val]=='Completed'" class="comp">
+                                Completed
+                            </div>
+                            <div v-else>
+                                {{ajstatus.t2[d.i][val]}}
+                            </div>
+                        </dbinput>
+                    </div>
+                </div>
+            </div>
+            <div slot="verification-disp" slot-scope="d">
+                <div class="fgrid">
+                    <div v-for="val in getJstatus(d.rval.verification.json(),'verification',d.i,'ajstatus')">
+                        <dbinput type="label" :label="val">
+                            <div v-if="ajstatus.verification[d.i][val]=='Pending'" class="pen">
+                                Pending
+                            </div>
+                            <div v-else-if="ajstatus.verification[d.i][val]=='Completed'" class="comp">
+                                Completed
+                            </div>
+                            <div v-else>
+                                {{ajstatus.verification[d.i][val]}}
+                            </div>
+                        </dbinput>
+                    </div>
+                </div>
+            </div>
+            <template slot="detailed" slot-scope="d">
+                <div class="gridautofr">
+                    <div class="middle">
+                        <span style="padding: 4px;border:4px solid lightgrey;border-radius: 4px;">
+                            <img style="height: 1.5in;width: 1.5in" :src="get_url(`upload/employee/onlineforms/${d.rval.oeid}/pp.png`)" />
+                        </span>
+                    </div>
+                    <formfill action="javascript:alert('submited');" :fcol="Object.filter(d.rval,[],['oeid','epwd','resume','management','enum','regtime','updtime','pfrom','pto','pdesignation','pdepartment','pdf','processing','t1','t2','verification','approve','job_id','protype','reject','complete','practical','hr','edtl','offer'],updemp.fval)" :dcol="Object.assign(updemp.dcol,{pcompany:' '})" :attrs="updemp.attrs" :visible="{pcompany:false}">
+                        <template slot="pcompany_pre-content">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Sl</th>
+                                        <th>Previous Company Name</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Department</th>
+                                        <th>Designation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(val,i) in d.rval.pcompany.split(',')">
+                                        <td>{{i+1}}</td>
+                                        <td>{{val}}</td>
+                                        <td>{{d.rval.pfrom.split(',')[i]}}</td>
+                                        <td>{{d.rval.pto.split(',')[i]}}</td>
+                                        <td>{{d.rval.pdepartment.split(',')[i]}}</td>
+                                        <td>{{d.rval.pdesignation.split(',')[i]}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </template>
+                    </formfill>
+                </div>
+            </template>
+        </dbtable>
+    </template>
+    <template slot="Rejected List">
+        <dbtable :sql="getrejsql()" :fcol="['edtl','processing','t1','t2','management','verification','protype']" :dcol="{edtl:'Candidate Details',management:'Management',processing:'Processing',verification:'Hr(salary & verification)',t1:'Technical 1',t2:'Technical 2',protype:'Phase'}" :updkey="['oeid']" @delete="(df)=>{df();}" @expand="()=>{}" @delrow="(row,i)=>{delerowfiles(row,i,'employee')}" :editable="false" name="rlist">
+            <div slot="protype" slot-scope="d">
+                <div v-if="d.rval.protype == 'processing'">
+                    Processing
+                </div>
+                <div v-if="d.rval.protype == 't1'">
+                    Technical 1
+                </div>
+                <div v-if="d.rval.protype == 't2'">
+                    Technical 2
+                </div>
+                <div v-if="d.rval.protype == 'management'">
+                    Management
+                </div>
+                <div v-if="d.rval.protype == 'verification'">
+                    Hr(salary & verification
+                </div>
+            </div>
+            <div slot="edtl" slot-scope="d">
+                Name : {{d.rval.fname}}<br>
+                Department : {{d.rval.department}}<br>
+                Designation : {{d.rval.designation}}<br>
+                Mobile Number : {{d.rval.mnumber}}<br>
+                <button type="button" @click="window.open(`http://online.new-yorkpizza.com/index.php?get=true&path=upload/employee/onlineforms/${d.rval['oeid']}/employee_registration.pdf`)" style="width:100px">Open</button>
+            </div>
+            <div slot="processing-disp" slot-scope="d">
+                <div class="fgrid">
+                    <div v-for="val in getJstatus(d.rval.processing.json(),'processing',d.i,'rjstatus')">
+                        <dbinput type="label" :label="val">
+                            <div v-if="rjstatus.processing[d.i][val]=='Pending'" class="pen">
+                                Pending
+                            </div>
+                            <div v-else-if="rjstatus.processing[d.i][val]=='Completed'" class="comp">
+                                Completed
+                            </div>
+                            <div v-else>
+                                {{rjstatus.processing[d.i][val]}}
+                            </div>
+                        </dbinput>
+                    </div>
+                </div>
+            </div>
+            <div slot="management-disp" slot-scope="d">
+                <div class="fgrid">
+                    <div v-for="val in getJstatus(d.rval.management.json(),'management',d.i,'rjstatus')">
+                        <dbinput type="label" :label="val">
+                            <div v-if="rjstatus.management[d.i][val]=='Pending'" class="pen">
+                                Pending
+                            </div>
+                            <div v-else-if="rjstatus.management[d.i][val]=='Completed'" class="comp">
+                                Completed
+                            </div>
+                            <div v-else>
+                                {{rjstatus.management[d.i][val]}}
+                            </div>
+                        </dbinput>
+                    </div>
+                </div>
+            </div>
+            <div slot="t1-disp" slot-scope="d">
+                <div class="fgrid">
+                    <div v-for="val in getJstatus(d.rval.t1.json(),'t1',d.i,'rjstatus')">
+                        <dbinput type="label" :label="val">
+                            <div v-if="rjstatus.t1[d.i][val]=='Pending'" class="pen">
+                                Pending
+                            </div>
+                            <div v-else-if="rjstatus.t1[d.i][val]=='Completed'" class="comp">
+                                Completed
+                            </div>
+                            <div v-else>
+                                {{rjstatus.t1[d.i][val]}}
+                            </div>
+                        </dbinput>
+                    </div>
+                </div>
+            </div>
+            <div slot="t2-disp" slot-scope="d">
+                <div class="fgrid">
+                    <div v-for="val in getJstatus(d.rval.t2.json(),'t2',d.i,'rjstatus')">
+                        <dbinput type="label" :label="val">
+                            <div v-if="rjstatus.t2[d.i][val]=='Pending'" class="pen">
+                                Pending
+                            </div>
+                            <div v-else-if="rjstatus.t2[d.i][val]=='Completed'" class="comp">
+                                Completed
+                            </div>
+                            <div v-else>
+                                {{rjstatus.t2[d.i][val]}}
+                            </div>
+                        </dbinput>
+                    </div>
+                </div>
+            </div>
+            <div slot="verification-disp" slot-scope="d">
+                <div class="fgrid">
+                    <div v-for="val in getJstatus(d.rval.verification.json(),'verification',d.i,'rjstatus')">
+                        <dbinput type="label" :label="val">
+                            <div v-if="rjstatus.verification[d.i][val]=='Pending'" class="pen">
+                                Pending
+                            </div>
+                            <div v-else-if="rjstatus.verification[d.i][val]=='Completed'" class="comp">
+                                Completed
+                            </div>
+                            <div v-else>
+                                {{rjstatus.verification[d.i][val]}}
+                            </div>
+                        </dbinput>
+                    </div>
+                </div>
+            </div>
+            <template slot="detailed" slot-scope="d">
+                <div class="gridautofr">
+                    <div class="middle">
+                        <span style="padding: 4px;border:4px solid lightgrey;border-radius: 4px;">
+                            <img style="height: 1.5in;width: 1.5in" :src="get_url(`upload/employee/onlineforms/${d.rval.oeid}/pp.png`)" />
+                        </span>
+                    </div>
+                    <formfill action="javascript:alert('submited');" :fcol="Object.filter(d.rval,[],['oeid','epwd','resume','management','enum','regtime','updtime','pfrom','pto','pdesignation','pdepartment','pdf','processing','t1','t2','verification','approve','job_id','protype','reject','complete','practical','hr','edtl','offer'],updemp.fval)" :dcol="Object.assign(updemp.dcol,{pcompany:' '})" :attrs="updemp.attrs" :visible="{pcompany:false}">
+                        <template slot="pcompany_pre-content">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Sl</th>
+                                        <th>Previous Company Name</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Department</th>
+                                        <th>Designation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(val,i) in d.rval.pcompany.split(',')">
+                                        <td>{{i+1}}</td>
+                                        <td>{{val}}</td>
+                                        <td>{{d.rval.pfrom.split(',')[i]}}</td>
+                                        <td>{{d.rval.pto.split(',')[i]}}</td>
+                                        <td>{{d.rval.pdepartment.split(',')[i]}}</td>
+                                        <td>{{d.rval.pdesignation.split(',')[i]}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </template>
+                    </formfill>
+                </div>
+            </template>
+        </dbtable>
+    </template>
+    </dbtable>
+    </template>
+</tabs>

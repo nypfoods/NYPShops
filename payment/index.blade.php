@@ -1,0 +1,12 @@
+<?php 
+	if(isset($_REQUEST["ordid"])) {
+		$ordid = $_REQUEST["ordid"];
+		$pd["ordpyid"] = $ordid;
+		$sql = sqlinsert($pd,"payments");
+		$res = $ldb->setData($sql);
+		echo "Payment ID ` $ordid ` Inserted";
+	} else {
+		echo "Payment ID not found";
+	}
+	print_r($_REQUEST);
+?>

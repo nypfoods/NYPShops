@@ -1,0 +1,62 @@
+body {
+    background: url('<?=get_url("res/images/about.jpg")?>');
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow-y: auto;
+}
+
+main {
+    background: #00000070 !important;
+}
+
+.container-contact100 {
+    background: #00000000 !important;
+}
+
+.txt2 {
+    color: gainsboro;
+}
+
+.talertcon button {
+    background: var(--primaryBtn);
+    color: white;
+}
+
+@media only screen and (min-width: 1200px) #main-nav ul a {
+    text-transform: uppercase;
+}
+
+#main-nav ul a {
+    text-transform: uppercase;
+}
+
+.presence {
+    color: white;
+}
+
+h2 {
+    color: white !important;
+    font-size: x-large !important;
+    font-weight: bold;
+}
+
+.presence li {
+    list-style-type: none;
+    margin-bottom: 10px;
+    text-align: justify;
+}
+
+.links>* {
+
+    padding: 10px;
+    color: gainsboro;
+}
+
+.grid>div {
+    height: 100px;
+    font-family: serif;
+}
+
+.input100 {
+    width: 96% !important;
+}

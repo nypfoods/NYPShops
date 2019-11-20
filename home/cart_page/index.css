@@ -1,0 +1,78 @@
+main {
+	background: white !important;
+}
+
+@media only screen and (max-width: 1000px) {
+    .cartpage {
+        top:50px;
+    }
+    .product-thumbnail {
+    	grid-template-columns: 70px 1fr !important;
+    }
+}
+
+.cartpage {
+	position: relative;
+    width: fit-content;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.tblnav {
+	display: none;
+}
+.pimg {
+	width: 100px;
+}
+
+.crtfrm input[type="number"] {
+	width: 100%;
+}
+
+.crtfrm textarea {
+	width: 100%;
+}
+
+.product-thumbnail {
+	display: grid;
+	grid-template-columns: 100px 1fr;
+}
+.productDiscription {
+	padding-left: 10px;
+}
+
+#crttble .pqty,#crttble .pamt,#crttble .pamt+td {
+	position: relative;
+	height: 100%;
+	vertical-align: middle;
+}
+
+.title {
+	padding-bottom: 10px;
+	border-bottom: 2px solid;
+}
+
+.card {
+	padding-left: 20px;
+	padding-right: 20px;
+	box-shadow: 1px 1px 1px 1px;
+}
+
+.crtfrm .dbinput label {
+	font-size: medium !important;
+	color: black;
+}
+
+#crttble table {
+	width: 100%;
+}
+
+tr:nth-child(odd) {
+	color: black;
+}
+strong {
+	font-weight: bold;
+}
+#crttble .tpng>b,#crttble .crst>b {
+	font-weight: bold;
+}

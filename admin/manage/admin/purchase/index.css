@@ -1,0 +1,16 @@
+#ptbl .tblnav>th>div {
+    grid-template-columns: 1fr !important;
+}
+
+#ptbl .tblnav>th>div>select,
+#ptbl .tblnav>th>div .tblnavbtn {
+    display: none;
+}
+
+#insisitm .tblnav {
+    display: none;
+}
+
+#myfrm .dbinput {
+    margin: 2px;
+}

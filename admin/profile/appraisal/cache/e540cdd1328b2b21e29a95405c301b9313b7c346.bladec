@@ -1,0 +1,143 @@
+<vue>#node</vue>
+<tabs :tabs="['View Appraisal']">
+ <div slot="View Appraisal" class="fgrid">
+ <div class="grid">
+ <dbinput type="select" label="Choose Month" :options="month" v-model="apf.month" required>
+ </dbinput>
+ </div>
+ <dbtable name="ptbl" :sql="`select * from (select *,@rating:=(ujr+ prs+ kao+ wia+ rms+ cip+ rtp+ aeg+ cmt+ mps+ aie+ pim+ lc+ iaet+ oat+ www+ pitd+ cig+ hta+ rstr+ del+ pmot) as rating,ROUND(ROUND(@rating/(22*5),2)*5,0) as rate_per from appraisal where  month like '${apf.month}%' and eid='${udtl.uid}') as tmp`" :fcol="['rate_per']" :dcol="{rate_per:'Rating'}" :updkey="['id']" @expand="()=>{}" :editable="false">
+ >
+ <div slot="rate_per-disp" slot-scope="d">
+ {{chkopt[d.rval.rate_per.parse('int')-1]}}
+ </div>
+ <template slot="detailed" slot-scope="d">
+ <div class="flex-fluid">
+ <dbinput type="label" label="Department">{{d.rval.department}}</dbinput>
+ <dbinput type="label" label="Designation">{{d.rval.designation}}</dbinput>
+ <dbinput type="label" label="Name">{{d.rval.fname}}</dbinput>
+ <dbinput type="label" label="Month">{{d.rval.month}}</dbinput>
+ </div>
+ <div> 1 - Poor: employee does not meet minimum job requirements 2 - Average: employee meets some job requirements 3 - Good: employee meets all job requirements 4 - Excellent: employee meets and often exceeds job requirements 5 - Outstanding: employee exceeds job requirements</div>
+ <div style="display: grid;grid-template-columns:1fr 1fr">
+ <div class="mainback" style="display: grid;grid-template-columns:1fr 1fr">
+ <div class="back"><b>Section I : Job Knowledge </b></div>
+ </div>
+ <b> Understands job requirements and responsibilities </b>
+ <div>
+ {{chkopt[d.rval.ujr.parse('int')-1]}}
+ </div>
+ <b> Possesses required skills and knowledge for the job</b>
+ <div>
+ {{chkopt[d.rval.prs.parse('int')-1]}}
+ </div>
+ <b>Keeps abreast of current developments pertaining to the job</b>
+ <div>
+ {{chkopt[d.rval.kao.parse('int')-1]}}
+ </div>
+ <div class="mainback" style="display: grid;grid-template-columns:1fr 1fr">
+ <div class="back"><b>Section II: Planning and Problem Solving </b></div>
+ </div>
+ <b> Works in an organized manner</b>
+ <div>
+ {{chkopt[d.rval.wia.parse('int')-1]}}
+ </div>
+ <b> Requires minimal supervision</b>
+ <div>
+ {{chkopt[d.rval.rms.parse('int')-1]}}
+ </div>
+ <b> Can identify problems</b>
+ <div>
+ {{chkopt[d.rval.cip.parse('int')-1]}}
+ </div>
+ <b> Reacts to problems in appropriate time</b>
+ <div>
+ {{chkopt[d.rval.rtp.parse('int')-1]}}
+ </div>
+ <div class="mainback" style="display: grid;grid-template-columns:1fr 1fr">
+ <div class="back"><b>Section III: Productivity</b></div>
+ </div>
+ <b> Achieves established goals</b>
+ <div>
+ {{chkopt[d.rval.aeg.parse('int')-1]}}
+ </div>
+ <b> Can multi-task between several projects</b>
+ <div>
+ {{chkopt[d.rval.cmt.parse('int')-1]}}
+ </div>
+ <b> Meets productivity standards</b>
+ <div>
+ {{chkopt[d.rval.mps.parse('int')-1]}}
+ </div>
+ <div class="mainback" style="display: grid;grid-template-columns:1fr 1fr">
+ <div class="back"><b>Section IV: Communication Skills</b></div>
+ </div>
+ <b> Articulates ideas effectively</b>
+ <div>
+ {{chkopt[d.rval.aie.parse('int')-1]}}
+ </div>
+ <b> Participates in meetings</b>
+ <div>
+ {{chkopt[d.rval.pim.parse('int')-1]}}
+ </div>
+ <b> Listens carefully</b>
+ <div>
+ {{chkopt[d.rval.lc.parse('int')-1]}}
+ </div>
+ <div class="mainback" style="display: grid;grid-template-columns:1fr 1fr">
+ <div class="back"><b>Section V: Team Work</b></div>
+ </div>
+ <b> Is an effective team player</b>
+ <div>
+ {{chkopt[d.rval.iaet.parse('int')-1]}}
+ </div>
+ <b> Offers assistance to team members</b>
+ <div>
+ {{chkopt[d.rval.oat.parse('int')-1]}}
+ </div>
+ <b> Works well with different personality types</b>
+ <div>
+ {{chkopt[d.rval.www.parse('int')-1]}}
+ </div>
+ <b> Participates in team discussions</b>
+ <div>
+ {{chkopt[d.rval.pitd.parse('int')-1]}}
+ </div>
+ <div class="mainback" style="display: grid;grid-template-columns:1fr 1fr">
+ <div class="back"><b>Section VI: Management Skills</b></div>
+ </div>
+ <b> Clearly identifies goals to all working in the managed area</b>
+ <div>
+ {{chkopt[d.rval.cig.parse('int')-1]}}
+ </div>
+ <b> Holds themself accountable to goals and objectives</b>
+ <div>
+ {{chkopt[d.rval.hta.parse('int')-1]}}
+ </div>
+ <b> Reports success towards reaching goals to all in managed area</b>
+ <div>
+ {{chkopt[d.rval.rstr.parse('int')-1]}}
+ </div>
+ <b> Demonstrates effective leadership talent and skills</b>
+ <div>
+ {{chkopt[d.rval.del.parse('int')-1]}}
+ </div>
+ <b> Positively motivates others to achieve goals and gain skills</b>
+ <div>
+ {{chkopt[d.rval.pmot.parse('int')-1]}}
+ </div>
+ </div>
+ <label> <b> In your opinion, what are the main strengths of the employee?</b></label>
+ {{d.rval.strength}}
+ <label> <b> In your opinion, what are the main areas of improvement that the employee should concentrate on?</b>
+ </label>
+ <div>{{d.rval.improvement}}</div>
+ <label> <b> Please provide any additional comments on the employee</b>
+ </label>
+ <div>{{d.rval.additional}}</div>
+ <label> <b> How long have you been employed with the company?</b>
+ </label>
+ <div>{{d.rval.hlong}}</div>
+ </template>
+ </dbtable>
+ </div>
+</tabs>

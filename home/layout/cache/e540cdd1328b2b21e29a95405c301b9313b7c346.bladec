@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head> 
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.1/css/all.css">
+ 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.1/css/v4-shims.css">
+ 	<link rel="stylesheet" type="text/css" href="<?=get_url('/global/flatpicker/flatpickr.min.css')?>">
+	<meta name="viewport" content="initial-scale=1"/>
+	<meta name="description" content="page description">
+	<?php if(strpos($chead,"<title>")===false): ?>
+ <title><?php echo static::e($title); ?> | <?php echo ucwords($glb["_GET"]["screen"],"/"); ?></title>
+	<?php endif; ?>
+	<?php if($vue): ?>
+ <script type="application/javascript">
+ const isvueapp=true,vnode='<?php echo static::e($vuenode); ?>';
+ var isMobile=<?=isMobile()?>;
+ if(typeof window.mobilecheck == 'function'){window.mobilecheck();}
+ window.addEventListener("resize",function(){
+ window.mobilecheck();
+ });
+ </script>
+	<?php else: ?>
+ <script type="application/javascript">
+ const isvueapp=false;
+ var isMobile=<?=isMobile()?>;
+ </script>
+	<?php endif; ?>
+	<?php if($clear): ?>
+ <?php echo getCSSfiles(); ?>
+
+ <link href="<?php echo get_url('screen/index.css'); ?>" media="all" rel="stylesheet"/>
+	<?php endif; ?>
+	<?php echo getJSfiles(); ?>
+
+	<?php echo $chead; ?>
+
+	<link rel="shortcut icon" href="<?=get_url('res/images/logo.png')?>" type="image/x-icon">
+	<script type="application/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?=$config["gapikey"]?>&callback=loadmap&libraries=places" async defer></script>
+	<script type="application/javascript" src="<?=get_url('/global/flatpicker/flatpickr.min.js')?>"></script>
+	<script type="application/javascript" src="<?=get_url('/global/flatpicker/vue-flatpickr.js')?>"></script>
+</head>
+<body>
+	
+	<?php if(!$clnav): ?>
+ <?php echo getMyScreen('/layout/preload'); ?>
+
+	<?php endif; ?>
+	<script type="text/javascript">
+ document.onreadystatechange = function (e){
+ window.loadcount = 0;
+ if(document.readyState=="interactive") {
+ window.loadcount<=90?
+ window.loadcount++:0;
+ if(typeof onready=="function") {
+ onready(window.loadcount,false);
+ }
+ }else if(document.readyState === "complete") {
+ if(typeof onready=="function"&&isvueapp!==true) {
+ onready(100,true);
+ }
+ }
+ }
+	</script>
+	<?php if(!$clnav) { ?>
+ <?php if(isMobile()) { ?> 
+ <?php echo getMyScreen('/layout/navmob'); ?>
+
+ <?php } else { ?>
+ <?php echo getMyScreen('/layout/navbar'); ?>
+
+ <?php } ?>
+	<?php } ?>
+	<div id="node"><?php echo $screenData; ?></div>
+	<script type="application/javascript" src="<?php echo get_url('screen/index.js'); ?>"></script>
+</body>
+</html>
+

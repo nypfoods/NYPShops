@@ -1,0 +1,163 @@
+#fpqty input {
+    width: 100px;
+}
+
+.catsrch {
+    width: -webkit-fill-available;
+    min-height: 10px;
+    height: 30px;
+}
+
+.fptype-cat .pcard {
+    min-width: 100px;
+    max-width: 100px;
+}
+
+.dialog>div {
+    max-width: 11in;
+}
+
+.pcard {
+    padding: 5px;
+    background: antiquewhite;
+    border-radius: 4px;
+    margin-bottom: 2px;
+}
+
+.pcard>div {
+    padding: 2px;
+    background: #ffffffe6;
+}
+
+#myfrm1 {
+    background: gainsboro;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+#myfrm1 input,
+#myfrm1 textarea {
+    width: 100%;
+}
+
+#insisitm .tblnav {
+    display: none;
+}
+
+#insisitm1 .tblnav {
+    display: none;
+}
+
+#ptbl .expand-detailed {
+    width: 59% !important;
+}
+
+.prodcard {
+    background-color: antiquewhite;
+    border: 2px solid gray;
+    border-radius: 5px;
+    text-align: left;
+    color: black;
+}
+
+.prodcard>div {
+    background: #ffffffcc;
+    padding: 5px;
+    position: relative;
+}
+
+.prodcard>div>.price {
+    position: absolute;
+    right: 5px;
+}
+
+.prodcard h4 {
+    font-size: large !important;
+}
+
+#ptbl .tblnavbtn>*:nth-child(2),
+#ptbl .tblnavbtn>*:nth-child(4) {
+    display: none;
+}
+
+.fullscr {
+    margin-bottom: 0px !important;
+    display: none !important;
+}
+
+.biglbl label {
+    font-size: large !important;
+}
+
+.sltcon {
+    background: #ececec;
+    border-radius: 4px;
+    padding: 4px;
+    margin: 0px 4px;
+}
+
+.cinfo div {
+    font-size: large;
+}
+
+.quee .tblchncon button {
+    color: var(--primaryBtn);
+}
+
+.quee .tblchncon button[type='Wi'] {
+    background: #ffface;
+}
+
+.quee .tblchncon button[type='Ot'] {
+    background: #eee;
+}
+
+.quee .tblchncon button[type='Pa'] {
+    background: #ffced3;
+}
+
+.quee .tblchncon button[type='Dl'] {
+    background: #ced3ff;
+}
+
+.quee .tblchncon button[type='On'] {
+    background: #d3ffce;
+}
+
+tr[row~="Wi"] {
+    background: #ffface;
+}
+
+tr[row~="Pa"] {
+    background: #ffced3;
+}
+
+tr[row~="Dl"] {
+    background: #ced3ff;
+}
+
+tr[row~="On"] {
+    background: #d3ffce;
+}
+
+.sts {
+    display: flex;
+    border-radius: 4px;
+}
+
+.sts>span {
+    margin: auto;
+    color: #fff;
+}
+
+.sts.B {
+    background: #ed553b;
+}
+
+.sts.Pr {
+    background: #f6d55c;
+}
+
+.sts.S {
+    background: #3caea3;
+}

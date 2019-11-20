@@ -1,0 +1,26 @@
+<vue>#node</vue>
+<tabs :tabs="['Console','JSON Reader','phpMyAdmin']">
+ <div slot="JSON Reader">
+ <div class="gridautofr">
+ <div class="box card cardin">
+ <dbtree :mytree="root.mytree" @input="loadmytree" root="/backup"></dbtree>
+ </div>
+ <div>
+ <dbtable :fcol="tbl.fcol" :tbldata="tbl" :editable="false">
+ </dbtable>
+ </div>
+ </div>
+ </div>
+ <div slot="Console" class="fgrid" style="height: calc(100% - 115px);">
+ <div class="gridfrauto">
+ <dbinput type="textarea" label="Command Area" v-model="cmd" :wordcase="false">
+ </dbinput>
+ <dbinput type="button" @click="executeCmd()" label=" ">Execute</dbinput>
+ </div>
+ <b>Output:</b>
+ <div class="col" v-html="output.json2html()" style="max-height: calc(100%);overflow: auto;">
+ </div>
+ </div>
+ <div slot="phpMyAdmin">
+ </div>
+</tabs>

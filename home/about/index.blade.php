@@ -1,0 +1,180 @@
+<clearnav></clearnav>
+<div class="foo">
+    <?php
+  include('screen/home/carthead.php');
+  ?>
+<link rel="stylesheet" href="<?=get_url('screen/home/assets/homecss/main.css')?>">
+    <script type="application/javascript" src="<?=get_url('screen/home/products/js/main.js')?>"></script>
+    <main id="abtfrm" style="margin-top: 50px;">
+        <div class="contact-form-with-address">
+            <div class="container" style="background: #fefefef7 !important">
+                <div class="section-header">
+                    <h2 class="section-title">Our History</h2>
+                </div>
+                <section class="ftco-about d-md-flex">
+                    <div class="one-half ftco-animate fadeInUp ftco-animated" style="padding: 10px;text-align: center;">
+                        <div class="abtrd">
+                            <div class="grid" style="grid-template-columns: 1fr;">
+                                <p><b style="font-weight: bold;">AN OLD FASHIONED PIZZERIA</b> The history of pizza begins in antiquity,
+                                    when various ancient cultures produced basic flatbreads with several toppings.
+                                    A precursor of pizza was probably the focaccia, a flat bread known to the Romans as panisfocacius, to which toppings were then added. Modern pizza developed in Naples when tomato was added to the focaccia in the late 18th century.
+                                    The word pizza was first documented in 997 A.D. in Gaeta and successively in different parts of Central and Southern Italy. Pizza was mainly eaten in Italy and by emigrants from there. This changed after World War II, when Allied troops stationed in Italy came to enjoy pizza along with other Italian foods.
+                                </p>
+                                <br />
+                            </div>
+                            <div class="grid" style="grid-template-columns: 1fr;">
+                                <p><b style="font-weight: bold;">OUR HISTORY - NEW YORK PIZZA’s</b> First outlet was started in the year 1996 in Long island of Manhattan city, New York, America. We were among the first few pizza restaurants to open in Long island and as such, we have been able to watch Long island grow into a vibrant and unique part of this great city. But even we couldn’t have predicted how far it would come — in 9 years we had 78 outlets located in Brooklyn; Queens; Manhattan; Georgia; Siena; Florida; Miami; Colombia; Coli; Mexico; Tobago, Panama and the list is long. Over the past 2.5 decades and last 14 years in particular, we have been focusing to make it a Global Brand.
+                                </p><br />
+                            </div>
+                            <div class="grid" style="grid-template-columns:1fr;">
+                                <p><b style="font-weight: bold;">THE BEGINNING</b> On 15th Aug 2018 we launched the new face of NEW YORK PIZZA by investing $800 millions in Cambodia (South America) and kept the first step towards creating the first brand offering NEW YORK STYLE PIZZA. New York Pizza has already marked its presence in Asia by having head quarter in India.
+                                </p><br />
+                            </div>
+                            <div class="grid" style="grid-template-columns: 1fr;">
+                                <p><b style="font-weight: bold;">OUR PIZZA</b> Each pizza is hand rolled and tossed to perfection. Our dough and sauces are made fresh by the same recipes handed down for many years to make our own NEW YORK STYLE PIZZA. We use only the freshest and highest quality ingredients for our handcrafted pizzas. The unique things about our restaurant is the authentic and original recipe and well-seasoned slate stone ovens producing perfect crust, texture and taste. It’s safe to say, that over a billion pies have been cooked in our ovens for our loyal customers.
+                                </p><br />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="ftco-section">
+                    <div class="container">
+                        <div class="section-header">
+                            <h2 class="section-title">Our Team</h2>
+                            <p class="section-ti">Our Expert, Experienced, Specialist Support </p>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 mb-sm-4 ftco-animate">
+                                <div class="staff">
+                                    <div class="info text-center d-flex col">
+                                        <div class="row">
+                                            <div class="col-lg-4 flex">
+                                                <div style="margin: auto;">
+                                                    <div class="img mb-4" style="background-image: url(<?=get_url('screen/home/assets/images/team/Tariq.jpeg')?>);"></div>
+                                                    <h3><a href="teacher-single.html">Tariq Abdulla</a></h3>
+                                                    <span class="position"> Marketing Director</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <p class="mb-3">Tariq Abdullah Studied Bachelor of science in Biology and Chemistry, with highest honors, Alabama State University, Montgomery, AL .He is very analytical in terms of conducting due diligence for business development, He posses great ability to adapt to new environments, both at social and economical level, His strength lies in creating practical strategies for successful business negotiations .He always look for simple and practical solution within a complex mechanism. During The Period 1991 to 1992 He Helps His Brother To Setup of New DIY Store in Multiple Locations In England, He also used to manage restaurant for 6months in England, He Was Introduced to Garment Manufacturer Industries in Dubai During 1992 to 1993.He Spend Whole Year to learn And Understand the Industry from manufacturing point.And He Was Representing Garment Manufacturers of UAE in America During 1993 to 1997 And Sel Their Productions To Large Retail Stores ,Like JC Pennys, Wal-Mart, Sears, Target.<br>
+                                                    During 1997 to 2012 He Was Engaged in Multiple Business ,Trade Financing, Accounting, Tax Planning, Insurance, Capital Markets, Private Investments, etc. During This Period He Also Represented Some Top Insurance Company In America Such as MetLife, John Hancock, Guardian and Union Central.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 mb-sm-4 ftco-animate">
+                                <div class="staff">
+                                    <div class="info text-center d-flex col">
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                <p class="mb-3">Torben graduated from the Aarhus School of Business in Denmark in 2002, and holds a Masters Degree in Finance. He is a financial specialist and long-time Corporate Director.Torben’s professionalism ensured that immediately after graduation, he was hired as the Director of a retail company. Within 2 years he took ownership of the company via a Management Buy-Out and the company’s employment turnover rose from just 15 people to 50 in 2009. It was at this stage when Torben seized the opportunity to sell the business.His flare for business ventures evolved and Torben established an investment company specifically for the Solar Energy sector, and in the three years following, the company became by far the largest and most successful investment company for Solar Energy in Denmark. In 2010, the company managed Solar Plant investments for more than USD 150 million, and during this time, Torben had constructed and financed more than 20 large scale Solar Plants in Germany, Spain and Italy. In 2010 Torben sold this venture and has moved his interests into structured corporate bonds and has also acquired a share in an Oil Depot and Refinery. Through his well-established network he has continued his funding work and also assists in the management of several companies.Torben’s knowledge, skills and experience in the fields of business and finance enable him to be well positioned and highly respected within our organisation.</p>
+                                            </div>
+                                            <div class="col-lg-4 flex">
+                                                <div style="margin: auto;">
+                                                    <div class="img mb-4" style="background-image: url(<?=get_url('screen/home/assets/images/team/Torben.jpeg')?>);"></div>
+                                                    <h3><a href="teacher-single.html">Torben Pedersen</a></h3>
+                                                    <span class="position">Financial Specialist</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 mb-sm-4 ftco-animate">
+                                <div class="staff">
+                                    <div class="info text-center d-flex col">
+                                        <div class="row">
+                                            <div class="col-lg-4 flex">
+                                                <div style="margin: auto;">
+                                                    <div class="img mb-4" style="background-image: url(<?=get_url('screen/home/assets/images/team/Sergio.jpeg')?>);"></div>
+                                                    <h3><a href="teacher-single.html">Sergio Carteny</a></h3>
+                                                    <span class="position">Strategical Analyst</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <p class="mb-3">Sergio is a graduate of the University of Siena, Faculty of Economics and Banking – Thesis Institute of Accountants General and Applied. In 1999 he registered as a member of the Public Statutory Auditors and became a Member of the Royal Institute of Chartered Surveyors in the United Kingdom.Sergio’s professional experience includes acting as a Statutory Public Auditor in two companies, one which specialises in sportswear, helmets, goggles and trading distribution and the second a construction and real estate property company.His experience makes him a diverse and dynamic individual. He has many years of being responsible for the correct and accurate deliverance of finance, procurement and company information and has proved himself to be an honest and reliable asset to any organisation.Sergio’s knowledge and skills have enabled him to successfully act in the mergers and acquisitions fields and his strengths ensured the continuity of the businesses without any negative impact on the level of motivation of employees.His excellent communication skills, coupled with multi-language ability including English and French make Sergio a valuable member of the team.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 mb-sm-4 ftco-animate">
+                                <div class="staff">
+                                    <div class="info text-center d-flex col">
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                <p class="mb-3">An astute Hotelier and Educationist with a rich experience of over 2 Decades in Hotel and Restaurant Operations, Project Setup, Turnkey and Operations.
+                                                    Qualification - Hotel Management qualified professional and Graduated in Business Management from Newport University, California, USA, also certificate program from American Hotel & Motel Association (AHMA) from Michigan University, (U.S.A). He is also certified Menu Planner conducted by Hotel Guestlines Days and Resorts, Tirupati in the year 1996.
+                                                    Amit was involved in step-up and operations of Wimpy Restaurant – Noida, Le-Connessiours (travel Company), Hotel hill View – Faridabad (presently known as Atrium - A unit of Claridges hotels and resorts Pvt Ltd.), The Umeed – Jodhpur, Hotel Mahadev Palace – Jaisalmer, Hotel Savoy Suites – Noida, Hotel Ludlow Castle - Kasauli, Hotel Savoy Greens – Karnal.
+                                                    He also carries the strong experience in education - AHA as National Head – MIS (National sales analysis, marketing budgeting and sales planning), Call Center and also the business head for Delhi and NCR. He was Business Head – North and East India with UEI GLOBAL, managing 14 centers. Lately he was GM – Business Expansion (Education Division) with Chiripal Group – A 4000 Cr company involved in Denim Manufacturing, poly films, education, real estate etc. He was involved in setting up schools, Consulting Colleges and Universities.</p>
+                                            </div>
+                                            <div class="col-lg-4 flex">
+                                                <div style="margin: auto;">
+                                                    <div class="img mb-4" style="background-image: url(<?=get_url('screen/home/assets/images/team/amit.jpeg')?>);"></div>
+                                                    <h3><a href="teacher-single.html">Amit Arora</a></h3>
+                                                    <span class="position">Head - Asia Pacific</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="team" class="section">
+                    <div class="container">
+                        <div class="section-header">
+                            <h2 class="section-title">Gallery</h2>
+                        </div>
+                        <div id="gallery" class="row  owl-carousel">
+                            <div class="gallery-item">
+                                <div class="single-team">
+                                    <img src="<?=get_url('screen/home/assets/images/gallery-1.jpg')?>" alt="">
+                                </div>
+                            </div>
+                            <div class="gallery-item">
+                                <div class="single-team">
+                                    <img src="<?=get_url('screen/home/assets/images/gallery-2.jpg')?>" alt="">
+                                </div>
+                            </div>
+                            <div class="gallery-item">
+                                <div class="single-team">
+                                    <img src="<?=get_url('screen/home/assets/images/gallery-3.jpg')?>" alt="">
+                                </div>
+                            </div>
+                            <div class="gallery-item">
+                                <div class="single-team">
+                                    <img src="<?=get_url('screen/home/assets/images/gallery-4.jpg')?>" alt="">
+                                </div>
+                            </div>
+                            <div class="gallery-item">
+                                <div class="single-team">
+                                    <img src="<?=get_url('screen/home/assets/images/gallery-5.jpg')?>" alt="">
+                                </div>
+                            </div>
+                            <div class="gallery-item">
+                                <div class="single-team">
+                                    <img src="<?=get_url('screen/home/assets/images/gallery-6.jpg')?>" alt="">
+                                </div>
+                            </div>
+                            <div class="gallery-item">
+                                <div class="single-team">
+                                    <img src="<?=get_url('screen/home/assets/images/gallery-7.jpg')?>" alt="">
+                                </div>
+                            </div>
+                            <div class="gallery-item">
+                                <div class="single-team">
+                                    <img src="<?=get_url('screen/home/assets/images/gallery-8.jpg')?>" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+    <div id="cd-shadow-layer"></div>
+    <?php include('screen/home/footer.php'); ?>
+</div>

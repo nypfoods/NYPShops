@@ -1,0 +1,33 @@
+.card {
+    width: fit-content !important;
+}
+
+#cardsss {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    width: 11.77in;
+}
+
+#appreg {
+    margin-top: 80px;
+    padding: 15px;
+    background-color: white;
+    color: black;
+}
+
+
+h1 {
+    text-align: center;
+    font-size: xx-large !important;
+    margin-bottom: 10px !important;
+    font-weight: bolder !important;
+}
+
+
+.dbinput>label {
+    font-size: initial !important;
+}
+
+.imgo object,
+.imgo img {
+    object-fit: fill;
+}

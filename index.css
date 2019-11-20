@@ -1,0 +1,154 @@
+:root {
+    --primary: #b3282a;
+    --primaryBtn: #354295;
+    --primaryBtnF: white;
+    --primaryBg: #b3282a;
+    --primaryAlt: white;
+    --dOverlay: #0000000d;
+    --lOverlay: white;
+    --model: #69696969;
+    --secondary: #2c398f;
+}
+
+#masthead {
+    padding: 0px !important;
+    max-height: -webkit-fill-available !important;
+}
+
+.header-wrap {
+    margin: 0px !important;
+}
+
+.secondary-navigation ul.menu>li>a,
+.secondary-navigation ul.nav-menu>li>a {
+    padding: 0px !important;
+}
+
+#main-nav ul li a {
+    text-transform: uppercase;
+}
+
+<?php if(strpos($path, "admin") !=-1) {
+    ?><?php
+}
+
+else {
+    ?>body {
+        background: url(http://online.new-yorkpizza.com/images/gallery-1.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    <?php
+}
+
+?>#notifycon {
+    position: absolute;
+    overflow-y: auto;
+    max-height: 400px;
+    top: 45px;
+    background: #f5f5f5b5;
+    z-index: 1;
+    color: black;
+    border-radius: 2px;
+    overflow-x: hidden;
+}
+
+#notifycon .clsbtn {
+    position: absolute;
+    right: 0;
+    padding: 5px;
+    top: 0;
+    background: var(--primaryBg);
+    color: white;
+    border-radius: 2px;
+    margin: 2px;
+    height: fit-content;
+    font-weight: bold;
+    cursor: pointer;
+    width: fit-content;
+}
+
+#notifycon .ncard {
+    width: 98%;
+    min-width: 400px;
+    padding: 10px 20px;
+    margin: 2px 5px;
+    box-shadow: 1px 1px 1px 1px grey;
+    background: white;
+    border-radius: 2px;
+}
+
+#notifycon .ncard .ntitle {
+    text-transform: uppercase;
+    font-size: large;
+}
+
+#notifycon .ncard .ntitle {}
+
+#notifycon .ncard>div {
+    margin: 2px;
+    padding-right: 30px;
+}
+
+
+
+/*------- Pre-Loader ----*/
+
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #263238;
+    z-index: 9999999999;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    top: 45%;
+    position: relative;
+    margin: 0px auto;
+}
+
+.double-bounce1,
+.double-bounce2 {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #b3282a;
+    opacity: 0.6;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+    animation: sk-bounce 2.0s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-bounce {
+
+    0%,
+    100% {
+        -webkit-transform: scale(0);
+    }
+
+    50% {
+        -webkit-transform: scale(1);
+    }
+}
+
+@keyframes sk-bounce {
+
+    0%,
+    100% {
+        transform: scale(0);
+        -webkit-transform: scale(0);
+    }
+
+    50% {
+        transform: scale(1);
+        -webkit-transform: scale(1);
+    }
+}

@@ -1,0 +1,34 @@
+<vue>#node</vue>
+<tabs :tabs="['Leave Types','Applied Leaves','Approved Leaves','Rejected Leaves']">
+    <div slot="Leave Types">
+        <form autocomplete="off" id="myfrm" action="javascript:leavetype()" style="display: grid;grid-template-columns: 1fr 1fr 1fr 1fr 1fr">
+            <dbinput type="text" label="Leave Type" v-model="apf.type" required></dbinput>
+            <dbinput type="number" label="Days" v-model="apf.days" required></dbinput>
+            <dbinput type="submit" label="">ADD</dbinput>
+        </form>
+        <dbtable name="ttbl" sql="select * from leave_type" :fcol="['type','days']" :dcol="{type:'Leave Type',days:'Days'}" :updkey="['id']" @delete="(df)=>{df();}" :defaultcol="apf" :editable="false">
+        </dbtable>
+    </div>
+    <template slot="Applied Leaves">
+        <dbtable name="atbl" sql="select (select (select sum(days) as days from leave_type where type=e.type) - sum(a_days) from employee_leave where eid=e.eid and type = e.type) as days,e.* from employee_leave as e where status='P'" :fcol="['adate','department','fname','uname','type','lfrom','lto','reason','days','status']" :dcol="{department:'Department',uname:'User Id',fname:'Name',type:'Leave Type',lfrom:'From',lto:'To',reason:'Reason',status:'Status',days:'Remaining',adate:'Applied Date'}" :updkey="['id']" :defaultcol="apf" :editable="false">
+            <div slot="status" slot-scope="d">
+                <dbinput type="switch" label="Approve" v-model="d.rval.status" status_true='A' status_false="R" @input="update_apstatus(d.rval)">
+                </dbinput>
+                <dbinput type="switch" label="Reject" v-model="d.rval.status" status_true='P' status_false="R" @input="update_apstatus(d.rval)">
+                </dbinput>
+            </div>
+        </dbtable>
+    </template>
+    <template slot="Approved Leaves">
+        <dbtable name="aptbl" sql="select * from employee_leave where status='A'" :fcol="['department','fname','uname','type','lfrom','lto','reason','adate','apdate']" :dcol="{department:'Department',uname:'User Id',fname:'Name',type:'Leave Type',lfrom:'From',lto:'To',reason:'Reason',adate:'Added Date',apdate:'Approved Date'}" :updkey="['id']" :defaultcol="apf" :editable="false">
+        </dbtable>
+    </template>
+    <template slot="Rejected Leaves">
+        <dbtable name="rtbl" sql="select * from employee_leave where status='R'" :fcol="['department','fname','uname','type','lfrom','lto','reason','status','adate','apdate']" :dcol="{department:'Department',uname:'User Id',fname:'Name',type:'Leave Type',lfrom:'From',lto:'To',reason:'Reason',status:'Status',adate:'Added Date',apdate:'Approved Date'}" :updkey="['id']" :defaultcol="apf" :editable="false">
+            <div slot="status" slot-scope="d">
+                <dbinput type="switch" label="Approve" v-model="d.rval.status" status_true='A' status_false="REJ" @input="update_apstatus(d.rval)">
+                </dbinput>
+            </div>
+        </dbtable>
+    </template>
+</tabs>

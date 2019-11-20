@@ -1,0 +1,53 @@
+<vue>#node</vue>
+<tabs :tabs="['Apply Leave','Previous Leaves']">
+    <template slot="Apply Leave">
+        <div class="gridfrauto">
+            <form autocomplete="off" id="myfrm" action="javascript:applyleave()" class="grid">
+                <dbinput type="select" sql="select * from leave_type" fcol="type" label="Leave Type" required @select="(val,row)=>{apf.type=row.type}"></dbinput>
+                <dbinput type="date" label="From" v-model="apf.lfrom" required></dbinput>
+                <dbinput type="date" label="To" v-model="apf.lto" required></dbinput>
+                <dbinput type="textarea" label="Reason" v-model="apf.reason"></dbinput>
+                <dbinput type="submit" label="">Apply</dbinput>
+            </form>
+            <div>
+                <dbtable name="ldt" sql='select type,days,id as adays from leave_type' :fcol="['type','days','adays']" :dcol="{type:'Leave Type',days:'Total',adays:'Used'}" :editable="false">
+                    <div slot="adays-disp" slot-scope="d">
+                        <dbdata :sql="`select SUM(a_days) as a_days from  employee_leave as e where e.type='${d.rval.type}' and e.eid='${udtl.uid}' and e.status='A' group by e.type,e.eid`">
+                            <template slot="row" slot-scope="l">
+                                {{l.val.a_days}}
+                            </template>
+                        </dbdata>
+                    </div>
+                </dbtable>
+            </div>
+        </div>
+        <dbtable name="etbl" :sql="`select *,DATE_FORMAT(lto, '%Y-%m-%d') from employee_leave where DATE(lto)>=CURDATE() and eid='${udtl.uid}'`" :fcol="['type','lfrom','lto','reason','status']" :dcol="{type:'Leave Type',lfrom:'From',lto:'To',reason:'Reason',status:'Status'}" :updkey="['id']" @delete="(df)=>{df();}" :defaultcol="apf" :editable="false">
+            <template slot="status" slot-scope="d">
+                <div v-if="d.rval.status=='P'" style="color:orange">
+                    Pending Approval
+                </div>
+                <div v-if="d.rval.status=='A'" style="color:green">
+                    Approved
+                </div>
+                <div v-if="d.rval.status=='R'" style="color:red">
+                    Rejected
+                </div>
+            </template>
+        </dbtable>
+    </template>
+    <template slot="Previous Leaves">
+        <dbtable name="ptbl" :sql="`select *,DATE_FORMAT(lto, '%Y-%m-%d') from employee_leave where DATE(lto)<CURDATE() and eid='${udtl.uid}'`" :fcol="['type','lfrom','lto','reason','status']" :dcol="{type:'Leave Type',lfrom:'From',lto:'To',reason:'Reason',status:'Status'}" :updkey="['id']" :defaultcol="apf" :editable="false">
+            <template slot="status" slot-scope="d">
+                <div v-if="d.rval.status=='P'" style="color:orange">
+                    Pending Approval
+                </div>
+                <div v-if="d.rval.status=='A'" style="color:green">
+                    Approved
+                </div>
+                <div v-if="d.rval.status=='R'" style="color:red">
+                    Rejected
+                </div>
+            </template>
+        </dbtable>
+    </template>
+</tabs>

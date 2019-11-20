@@ -1,0 +1,97 @@
+.full {
+    width: 100%;
+}
+
+.comimg {
+    height: 2in;
+}
+
+.comimg>img {
+    height: 100%;
+    object-fit: contain;
+}
+
+form {
+    margin: 0px;
+    padding: 10px;
+
+}
+
+table th {
+    font-size: small !important;
+}
+
+.ttbl tr td:nth-child(1),
+.ttbl tr td:nth-child(4),
+.ttbl tr td:nth-child(7),
+.ttbl tr th:nth-child(1) .ttbl tr th:nth-child(4) .ttbl tr th:nth-child(7) {
+    background: lightgrey;
+}
+
+
+
+.bgrey {
+    background: gainsboro;
+}
+
+.ins {
+    margin: 5px;
+    border: 2px solid;
+}
+
+.addr {
+    padding: 5px;
+    border: 1px solid grey;
+}
+
+.label {
+    font-size: large;
+    padding: 10px;
+    width: 100%;
+    border-radius: 4px;
+    background: gainsboro;
+    font-weight: bold;
+}
+
+.brdr {
+    border: 1px solid;
+    padding: 14px;
+    margin: 1px;
+}
+
+.lbl {
+    padding-top: 10px;
+    width: 100%;
+    border-radius: 4px;
+    background: gainsboro;
+    padding-bottom: 10px;
+    padding-left: 5px;
+}
+
+.type-checkbox {
+    padding: 10px;
+}
+
+.type-checkbox [type="checkbox"]:not([achecked*="true"])+label,
+.type-checkbox [type="checkbox"][achecked*="true"]+label {
+
+    top: 0px;
+    left: 10px;
+}
+
+@media print {
+    .pagebreak {
+        page-break-after: always;
+    }
+
+    button {
+        display: none !important;
+    }
+
+    input {
+        border: 0px;
+        background: transparent;
+        border-radius: 0px;
+        border-bottom: 2px solid black;
+    }
+}

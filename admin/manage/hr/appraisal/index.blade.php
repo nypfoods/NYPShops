@@ -1,0 +1,284 @@
+<?php
+function getRadios($name="radio",$input,$array,$values="chkoptv[i]") {
+    return "<div class='flex-fluid checkbox'>
+        <dbinput v-model='rep.$name' v-for=\"(rdio,i) in $array\" name='$name' type='radio' :ivalue='rdio' @click.native=\"$input=$values;\" required></dbinput>
+</div>";
+}
+?>
+<vue>#node</vue>
+<tabs :tabs="['Add Appraisal','View Appraisal']">
+    <div slot="Add Appraisal" class="fgrid">
+        <div id="appreg" style="display: flex;">
+            <div class="a4pw" style="margin: auto;">
+                <h1>Employee Performance Evaluation</h1>
+                <form autocomplete="off" name="myfrm" action="javascript:addappraisal()" @invalid="" @onnext="" style="display: grid;grid-template-columns:1fr">
+                    <div class="gridauto">
+                        <dbinput v-model="flds.department" type="select" sql="select * from department" fcol="dname" label="Department" required :ivalue="flds.department"></dbinput>
+                        <dbinput v-model="flds.designation" type="select" :sql="dessql" fcol="desname" label="Designation" required></dbinput>
+                        <dbinput v-model="flds.fname" type="search" :sql="fsql" fcol="fname" label="Employee Name" required @select="(val,row)=>{flds.uname=row.uname,flds.eid=row.eid;}"></dbinput>
+                        <dbinput type="year" label="Year" v-model="flds.month" :ivalue="flds.month" required>
+                        </dbinput>
+                        <dbinput type="button" @click="getMonthRating()" label=" " class="grating">Get Rattings</dbinput>
+                    </div>
+                    <div v-if="flds.fname!=''&&flds.month!=''&&getf&&redrep">
+                        <div>Please rate the employee using the following performance rating scale: 1 - Poor: employee does not meet minimum job requirements 2 - Average: employee meets some job requirements 3 - Good: employee meets all job requirements 4 - Excellent: employee meets and often exceeds job requirements 5 - Outstanding: employee exceeds job requirements</div>
+                        <div style="display: grid;grid-template-columns:1fr 1fr">
+                            <div class="mainback" style="display: grid;grid-template-columns:1fr 1fr">
+                                <div class="back"><b>Section I : Job Knowledge </b></div>
+                                <div class="flex-fluid">
+                                    <div v-for="(nm,i) in chkopt" style="width: 45px;margin: 10px;margin-left:3px; ">
+                                        {{nm}}
+                                    </div>
+                                </div>
+                            </div>
+                            <!--   <dbinput  type="text" label="First Name "  v-model="apf.fname" required></dbinput> -->
+                            <b> Understands job requirements and responsibilities </b>
+                            <?=getRadios('ujr','rdtls.ujr',"chkopt")?>
+                            <b> Possesses required skills and knowledge for the job</b>
+                            <?=getRadios('prs','rdtls.prs',"chkopt")?>
+                            <b>Keeps abreast of current developments pertaining to the job</b>
+                            <?=getRadios('kao','rdtls.kao',"chkopt")?>
+                            <div class="mainback" style="display: grid;grid-template-columns:1fr 1fr">
+                                <div class="back"><b>Section II: Planning and Problem Solving </b></div>
+                                <div class="flex-fluid">
+                                    <div v-for="(nm,i) in chkopt" style="width: 45px;margin: 10px;margin-left:3px; ">
+                                        {{nm}}
+                                    </div>
+                                </div>
+                            </div>
+                            <b> Works in an organized manner</b>
+                            <?=getRadios('wia','rdtls.wia',"chkopt")?>
+                            <b> Requires minimal supervision</b>
+                            <?=getRadios('rms','rdtls.rms',"chkopt")?>
+                            <b> Can identify problems</b>
+                            <?=getRadios('cip','rdtls.cip',"chkopt")?>
+                            <b> Reacts to problems in appropriate time</b>
+                            <?=getRadios('rtp','rdtls.rtp',"chkopt")?>
+                            <div class="mainback" style="display: grid;grid-template-columns:1fr 1fr">
+                                <div class="back"><b>Section III: Productivity</b></div>
+                                <div class="flex-fluid">
+                                    <div v-for="(nm,i) in chkopt" style="width: 45px;margin: 10px;margin-left:3px; ">
+                                        {{nm}}
+                                    </div>
+                                </div>
+                            </div>
+                            <b> Achieves established goals</b>
+                            <?=getRadios('aeg','rdtls.aeg',"chkopt")?>
+                            <b> Can multi-task between several projects</b>
+                            <?=getRadios('cmt','rdtls.cmt',"chkopt")?>
+                            <b> Meets productivity standards</b>
+                            <?=getRadios('mps','rdtls.mps',"chkopt")?>
+                            <div class="mainback" style="display: grid;grid-template-columns:1fr 1fr">
+                                <div class="back"><b>Section IV: Communication Skills</b></div>
+                                <div class="flex-fluid">
+                                    <div v-for="(nm,i) in chkopt" style="width: 45px;margin: 10px;margin-left:3px; ">
+                                        {{nm}}
+                                    </div>
+                                </div>
+                            </div>
+                            <b> Articulates ideas effectively</b>
+                            <?=getRadios('aie','rdtls.aie',"chkopt")?>
+                            <b> Participates in meetings</b>
+                            <?=getRadios('pim','rdtls.pim',"chkopt")?>
+                            <b> Listens carefully</b>
+                            <?=getRadios('lc','rdtls.lc',"chkopt")?>
+                            <div class="mainback" style="display: grid;grid-template-columns:1fr 1fr">
+                                <div class="back"><b>Section V: Team Work</b></div>
+                                <div class="flex-fluid">
+                                    <div v-for="(nm,i) in chkopt" style="width: 45px;margin: 10px;margin-left:3px; ">
+                                        {{nm}}
+                                    </div>
+                                </div>
+                            </div>
+                            <b> Is an effective team player</b>
+                            <?=getRadios('iaet','rdtls.iaet',"chkopt")?>
+                            <b> Offers assistance to team members</b>
+                            <?=getRadios('oat','rdtls.oat',"chkopt")?>
+                            <b> Works well with different personality types</b>
+                            <?=getRadios('www','rdtls.www',"chkopt")?>
+                            <b> Participates in team discussions</b>
+                            <?=getRadios('pitd','rdtls.pitd',"chkopt")?>
+                            <div class="mainback" style="display: grid;grid-template-columns:1fr 1fr">
+                                <div class="back"><b>Section VI: Management Skills</b></div>
+                                <div class="flex-fluid">
+                                    <div v-for="(nm,i) in chkopt" style="width: 45px;margin: 10px;margin-left:3px; ">
+                                        {{nm}}
+                                    </div>
+                                </div>
+                            </div>
+                            <b> Clearly identifies goals to all working in the managed area</b>
+                            <?=getRadios('cig','rdtls.cig',"chkopt")?>
+                            <b> Holds themself accountable to goals and objectives</b>
+                            <?=getRadios('hta','rdtls.hta',"chkopt")?>
+                            <b> Reports success towards reaching goals to all in managed area</b>
+                            <?=getRadios('rstr','rdtls.rstr',"chkopt")?>
+                            <b> Demonstrates effective leadership talent and skills</b>
+                            <?=getRadios('del','rdtls.del',"chkopt")?>
+                            <b> Positively motivates others to achieve goals and gain skills</b>
+                            <?=getRadios('pmot','rdtls.pmot',"chkopt")?>
+                        </div>
+                        <label> <b> In your opinion, what are the main strengths of the employee?</b></label>
+                        <dbinput type="textarea" v-model="rdtls.strength"></dbinput>
+                        <label> <b> In your opinion, what are the main areas of improvement that the employee should concentrate on?</b>
+                        </label>
+                        <dbinput type="textarea" v-model="rdtls.improvement"></dbinput>
+                        <label> <b> Please provide any additional comments on the employee</b>
+                        </label>
+                        <dbinput type="textarea" v-model="rdtls.additional"></dbinput>
+                        <label> <b> How long have you been employed with the company?</b>
+                        </label>
+                        <dbinput type="textarea" v-model="rdtls.hlong"></dbinput>
+                        <div class="flex-fluid">
+                            <dbinput type="submit" value="">Submit</dbinput>
+                            <dbinput type="button" value="" @click="t$('#appreg>div').print()">Print</dbinput>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div slot="View Appraisal" class="fgrid">
+        <div class="grid">
+            <dbinput type="select" sql="select * from department" fcol="dname" label="Department" @select="(val,row)=>{apf.department=row.dname}"></dbinput>
+            <dbinput type="select" :sql="dessql" fcol="desname" label="Designation" @select="(val,row)=>{apf.designation=row.desname}"></dbinput>
+            <dbinput v-model="apf.fname" type="search" :sql="fsql" fcol="fname" label="Employee Name"></dbinput>
+            <dbinput type="text" label="Year" v-model="apf.month">
+            </dbinput>
+        </div>
+        <dbtable name="ptbl" :sql="`select * from (select *,@rating:=(ujr+ prs+ kao+ wia+ rms+ cip+ rtp+ aeg+ cmt+ mps+ aie+ pim+ lc+ iaet+ oat+ www+ pitd+ cig+ hta+ rstr+ del+ pmot) as rating,ROUND(ROUND(@rating/(22*5),2)*5,0) as rate_per from appraisal where department like '${apf.department}%' and  designation like '${apf.designation}%' and  fname like '${apf.fname}%' and  month like '${apf.month}%') as tmp`" :fcol="['uname','fname','rate_per']" :dcol="{uname:'Employee Id',fname:'Name',rate_per:'Rating'}" :updkey="['id']" :freez="['uname','fname','department']" @expand="()=>{}" :editable="false">
+            >
+            <div slot="rate_per-disp" slot-scope="d">
+                {{chkopt[d.rval.rate_per.parse('int')-1]}}
+            </div>
+            <template slot="detailed" slot-scope="d">
+                <div class="flex-fluid">
+                    <dbinput type="label" label="Department">{{d.rval.department}}</dbinput>
+                    <dbinput type="label" label="Designation">{{d.rval.designation}}</dbinput>
+                    <dbinput type="label" label="Name">{{d.rval.fname}}</dbinput>
+                    <dbinput type="label" label="Month">{{d.rval.month}}</dbinput>
+                </div>
+                <div>Please rate the employee using the following performance rating scale: 1 - Poor: employee does not meet minimum job requirements 2 - Average: employee meets some job requirements 3 - Good: employee meets all job requirements 4 - Excellent: employee meets and often exceeds job requirements 5 - Outstanding: employee exceeds job requirements</div>
+                <div style="display: grid;grid-template-columns:1fr 1fr">
+                    <div class="mainback" style="display: grid;grid-template-columns:1fr 1fr">
+                        <div class="back"><b>Section I : Job Knowledge </b></div>
+                    </div>
+                    <!--   <dbinput  type="text" label="First Name "  v-model="apf.fname" required></dbinput> -->
+                    <b> Understands job requirements and responsibilities </b>
+                    <div>
+                        {{chkopt[d.rval.ujr.parse('int')-1]}}
+                    </div>
+                    <b> Possesses required skills and knowledge for the job</b>
+                    <div>
+                        {{chkopt[d.rval.prs.parse('int')-1]}}
+                    </div>
+                    <b>Keeps abreast of current developments pertaining to the job</b>
+                    <div>
+                        {{chkopt[d.rval.kao.parse('int')-1]}}
+                    </div>
+                    <div class="mainback" style="display: grid;grid-template-columns:1fr 1fr">
+                        <div class="back"><b>Section II: Planning and Problem Solving </b></div>
+                    </div>
+                    <b> Works in an organized manner</b>
+                    <div>
+                        {{chkopt[d.rval.wia.parse('int')-1]}}
+                    </div>
+                    <b> Requires minimal supervision</b>
+                    <div>
+                        {{chkopt[d.rval.rms.parse('int')-1]}}
+                    </div>
+                    <b> Can identify problems</b>
+                    <div>
+                        {{chkopt[d.rval.cip.parse('int')-1]}}
+                    </div>
+                    <b> Reacts to problems in appropriate time</b>
+                    <div>
+                        {{chkopt[d.rval.rtp.parse('int')-1]}}
+                    </div>
+                    <div class="mainback" style="display: grid;grid-template-columns:1fr 1fr">
+                        <div class="back"><b>Section III: Productivity</b></div>
+                    </div>
+                    <b> Achieves established goals</b>
+                    <div>
+                        {{chkopt[d.rval.aeg.parse('int')-1]}}
+                    </div>
+                    <b> Can multi-task between several projects</b>
+                    <div>
+                        {{chkopt[d.rval.cmt.parse('int')-1]}}
+                    </div>
+                    <b> Meets productivity standards</b>
+                    <div>
+                        {{chkopt[d.rval.mps.parse('int')-1]}}
+                    </div>
+                    <div class="mainback" style="display: grid;grid-template-columns:1fr 1fr">
+                        <div class="back"><b>Section IV: Communication Skills</b></div>
+                    </div>
+                    <b> Articulates ideas effectively</b>
+                    <div>
+                        {{chkopt[d.rval.aie.parse('int')-1]}}
+                    </div>
+                    <b> Participates in meetings</b>
+                    <div>
+                        {{chkopt[d.rval.pim.parse('int')-1]}}
+                    </div>
+                    <b> Listens carefully</b>
+                    <div>
+                        {{chkopt[d.rval.lc.parse('int')-1]}}
+                    </div>
+                    <div class="mainback" style="display: grid;grid-template-columns:1fr 1fr">
+                        <div class="back"><b>Section V: Team Work</b></div>
+                    </div>
+                    <b> Is an effective team player</b>
+                    <div>
+                        {{chkopt[d.rval.iaet.parse('int')-1]}}
+                    </div>
+                    <b> Offers assistance to team members</b>
+                    <div>
+                        {{chkopt[d.rval.oat.parse('int')-1]}}
+                    </div>
+                    <b> Works well with different personality types</b>
+                    <div>
+                        {{chkopt[d.rval.www.parse('int')-1]}}
+                    </div>
+                    <b> Participates in team discussions</b>
+                    <div>
+                        {{chkopt[d.rval.pitd.parse('int')-1]}}
+                    </div>
+                    <div class="mainback" style="display: grid;grid-template-columns:1fr 1fr">
+                        <div class="back"><b>Section VI: Management Skills</b></div>
+                    </div>
+                    <b> Clearly identifies goals to all working in the managed area</b>
+                    <div>
+                        {{chkopt[d.rval.cig.parse('int')-1]}}
+                    </div>
+                    <b> Holds themself accountable to goals and objectives</b>
+                    <div>
+                        {{chkopt[d.rval.hta.parse('int')-1]}}
+                    </div>
+                    <b> Reports success towards reaching goals to all in managed area</b>
+                    <div>
+                        {{chkopt[d.rval.rstr.parse('int')-1]}}
+                    </div>
+                    <b> Demonstrates effective leadership talent and skills</b>
+                    <div>
+                        {{chkopt[d.rval.del.parse('int')-1]}}
+                    </div>
+                    <b> Positively motivates others to achieve goals and gain skills</b>
+                    <div>
+                        {{chkopt[d.rval.pmot.parse('int')-1]}}
+                    </div>
+                </div>
+                <label> <b> In your opinion, what are the main strengths of the employee?</b></label>
+                {{d.rval.strength}}
+                <label> <b> In your opinion, what are the main areas of improvement that the employee should concentrate on?</b>
+                </label>
+                <div>{{d.rval.improvement}}</div>
+                <label> <b> Please provide any additional comments on the employee</b>
+                </label>
+                <div>{{d.rval.additional}}</div>
+                <label> <b> How long have you been employed with the company?</b>
+                </label>
+                <div>{{d.rval.hlong}}</div>
+            </template>
+        </dbtable>
+    </div>
+</tabs>

@@ -1,0 +1,136 @@
+a{
+	color: var(--primaryBtn);
+}
+a:hover{
+	color: var(--primaryBtn);
+}
+.btn-common{
+    background-color: var(--primaryBtn);
+}
+.btn-border:hover{
+	background-color: var(--primaryBtn);
+}
+.controls .active{
+	color: var(--primaryBtn) !important;
+    border-color: var(--primaryBtn);
+}
+.bg-defult{
+	background: var(--primaryBtn)!important;
+}
+#carousel-area .carousel-control-next i, #carousel-area .carousel-control-prev i{
+	background: var(--primaryBtn);
+}
+.section-header .section-title:before{
+	background: var(--primaryBtn);
+}
+.overlay{
+	background: var(--primaryBtn);
+}
+.bg-white .navbar-nav .active{
+	color: var(--primaryBtn)!important;
+}
+.menu-bg .navbar-nav .active{
+	color: var(--primaryBtn)!important;
+}
+.menu-bg .navbar-nav .nav-link:hover{
+	color: var(--primaryBtn)!important;
+}
+.navbar-expand-md .navbar-nav .active > .nav-link, .navbar-expand-md .navbar-nav .nav-link.active, .navbar-expand-md .navbar-nav .nav-link.active::before, .navbar-expand-md .navbar-nav .nav-link.open, .navbar-expand-md .navbar-nav .open > .nav-link{
+	color: var(--primaryBtn);
+}
+.navbar-expand-md .navbar-nav .nav-link:focus, .navbar-expand-md .navbar-nav .nav-link:hover, .navbar-expand-md .navbar-nav .nav-link:hover:before{
+	color: var(--primaryBtn);
+}
+.navbar-expand-md .navbar-nav .nav-link:before{
+	background: var(--primaryBtn);
+}
+.menu-bg .logo-menu a, .menu-bg .menu-button:hover{color: var(--primaryBtn);}
+.menu-wrap .navbar-nav li .active,
+.menu-wrap .navbar-nav li .active::before{
+	color: var(--primaryBtn);
+}
+.menu-wrap a:hover, .menu-wrap a:focus{
+	color: var(--primaryBtn);
+}
+.icon-list a::before {
+    background: var(--primaryBtn);
+}
+#about .box-item .icon i{
+	color: var(--primaryBtn);
+}
+.item-boxes .icon{
+	border-color: var(--primaryBtn);
+}
+.item-boxes .icon i{
+	color: var(--primaryBtn);
+}
+.featured-box .featured-icon i{
+	color: var(--primaryBtn); 
+}
+.controls .mixitup-control-active{
+	color: var(--primaryBtn)!important;
+	border-color: var(--primaryBtn);
+}
+.testimonial-item .author .author-info h2 a:hover{
+	color: var(--primaryBtn);
+}
+.testimonial-item .content-inner span{
+	color: var(--primaryBtn);
+}
+.owl-theme .owl-controls .owl-page.active span, .owl-theme .owl-controls.clickable .owl-page:hover span{
+	background: var(--primaryBtn);
+}
+#subscribe .sub-item-box .icon-box i{
+	color: var(--primaryBtn);
+}
+#blog .blog-item-text h3 a:hover{
+	color: var(--primaryBtn);
+}
+.meta-tags span a:hover{
+	color: var(--primaryBtn);
+}
+.form-control:focus{
+	border: 1px solid var(--primaryBtn)
+}
+#contact:before{
+	background: var(--primaryBtn);
+}
+.contact-info i{
+	color: var(--primaryBtn);
+}
+.back-to-top i{
+	background-color: var(--primaryBtn);
+}
+.single-team .social-list li a{
+	color: var(--primaryBtn);
+}
+.footer-social li a{
+	background: var(--primaryBtn);
+}
+footer .menu li a:hover{
+	color: var(--primaryBtn);
+}
+.contact-footer li span a:hover{
+	color: var(--primaryBtn);
+}
+.toggle-map{
+	background-color: var(--primaryBtn);
+}
+.toggle-map .map-icon{
+	border-color: var(--primaryBtn);
+}
+.counter-item .icon i{
+	color: var(--primaryBtn);
+}
+#google-map{
+	border-color: var(--primaryBtn);
+}
+#subscribe form input:focus{
+	border-color: var(--primaryBtn);
+}
+#copyright p a:hover{
+	color: var(--primaryBtn);
+}
+#copyright .nav-inline .nav-link:hover{
+	color: var(--primaryBtn);
+}

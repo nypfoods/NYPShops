@@ -1,0 +1,29 @@
+
+#insisitm .tblnav {
+	display: none;
+}
+#insisitm1 .tblnav {
+	display: none;
+}
+.dbinput {
+	padding: 0px 10px;
+}
+#upimg .image1 {
+	width: 300px !important;
+}
+#upimg .image2 {
+	width: 300px !important;
+}
+ul{    
+	max-height: 170px;!important
+}
+ul li{
+	max-height: 80px;!important
+}
+
+#myfrm{
+	    margin-bottom: 72px;
+}
+button{
+    width: 132px;
+}

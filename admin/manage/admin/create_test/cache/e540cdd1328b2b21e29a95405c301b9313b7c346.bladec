@@ -1,0 +1,102 @@
+<vue>#node</vue>
+<tabs :tabs="['Add Test','View Test']">
+ <template slot="Add Test">
+ <form autocomplete="off" id="myfrm" action="javascript:void(0)" style="grid;grid-auto-columns: 1fr 1fr 1fr">
+ <div>
+ <dbinput type="select" sql="select * from department" fcol="dname" label="Department" required @select="(val,row)=>{apf.department=row.dname}"></dbinput>
+ <dbinput type="select" :sql="dessql" fcol="desname" label="Designation" required @select="(val,row)=>{apf.designation=row.desname}"></dbinput>
+ <dbinput type="date" v-model="apf.testdate" label="Date" required></dbinput>
+ </div>
+ <div>
+ <table>
+ <thead>
+ <th>Sl</th>
+ <th>Type</th>
+ <th>Question</th>
+ <th>Option #1</th>
+ <th>Option #2</th>
+ <th>Option #3</th>
+ <th>Option #4 </th>
+ <th>Correct Answer</th>
+ <th>Duration Seconds</th>
+ </thead>
+ <tbody>
+ <tr v-for="(v,i) in qst">
+ <td>
+ {{i+1}}
+ </td>
+ <td>
+ <dbinput type="select" v-model="qst[i].type" :options="['Multiple Choice','Short Answer']" required></dbinput>
+ </td>
+ <td>
+ <dbinput type="textarea" v-model="qst[i].question"></dbinput>
+ </td>
+ <td>
+ <dbinput type="text" v-model="qst[i].option1"></dbinput>
+ </td>
+ <td>
+ <dbinput type="text" v-model="qst[i].option2"></dbinput>
+ </td>
+ <td>
+ <dbinput type="text" v-model="qst[i].option3"></dbinput>
+ </td>
+ <td>
+ <dbinput type="text" v-model="qst[i].option4"></dbinput>
+ </td>
+ <td>
+ <dbinput type="text" v-model="qst[i].correct_answer"></dbinput>
+ </td>
+ <td>
+ <dbinput type="number" v-model="qst[i].duration"></dbinput>
+ </td>
+ </tr>
+ </tbody>
+ <tfoot>
+ <th colspan="6" class="right">
+ <div class="fit">Add More Questions
+ <button type="button" @click="qst.push({})">+</button>
+ </div>
+ </th>
+ </tfoot>
+ </table>
+ </div>
+ <div class="middle">
+ <div class="fit">
+ <button @click="addtest">
+ SUBMIT
+ </button>
+ </div>
+ </div>
+ </form>
+ </template>
+ <template slot="View Test">
+ <dbtable name="etbl" sql="select * from create_test group by testdate" :fcol="['testdate']" :dcol="{testdate:'Test Date'}" :updkey="['id']" @delete="(df)=>{df();}" :defaultcol="apf" @expand="()=>{}" :freez="['department']">
+ <div slot="detailed" slot-scope="d">
+ <dbtable name="etbl" :sql="`select * from create_test where testdate='${d.rval.testdate}'`" :fcol="['department','designation','question']" :dcol="{department:'Department',designation:'Designation',question:'Question'}" :updkey="['id']" @delete="(df)=>{df();}" @onadd="function(df,dcol){findcol=dcol;onappemp=df}" :defaultcol="apf" :freez="['department']">
+ <template slot="question" slot-scope="d">
+ <table>
+ <thead>
+ <tr>
+ <th>question</th>
+ <th>option1</th>
+ <th>option2</th>
+ <th>option3</th>
+ <th>option4</th>
+ <th>Correct Answer</th>
+ <th>Duration</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+ <td>{{i}}</td>
+ <td>{{val}}</td>
+ <td>{{val[0]}}</td>
+ </tr>
+ </tbody>
+ </table>
+ </template>
+ </dbtable>
+ </div>
+ </dbtable>
+ </template>
+</tabs>

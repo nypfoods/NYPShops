@@ -1,0 +1,117 @@
+<clearnav></clearnav>
+<vue>#node</vue>
+<div class="foo cartpage"  >
+	<?php
+	include('screen/home/cartheadnew.php');
+	?>
+	<script type="application/javascript" src="<?=get_url('screen/home/products/js/main.js')?>"></script>
+	<main class="col-12" >
+ <div style="display: grid;">
+	      <form class="crtfrm row" action="javascript:updatecartorder()" method="post" >
+	      	<div class="col-lg-7 col-12">
+	      		<div class="row">
+	      			<h3 class="title" style="font-size: xx-large;width: 100%;margin: 10px;">Billing Details</h3>
+          <dbinput title="Ex. Mob 9XXXXXXXXXX" type="mob" class="col-lg-6" label="Mob" v-model="apf.mnumber" required placeholder="Ex. Mob 9XXXXXXXXXX" ></dbinput>
+          <dbinput  type="email" v-model="apf.email" label="Email" class="col-lg-6" required></dbinput>
+          <dbinput type="name" v-model="apf.efname" label="First Name" class="col-lg-6" required></dbinput>
+          <dbinput type="name" v-model="apf.elname" label="Last Name" class="col-lg-6"></dbinput>
+          <dbinput type="textarea" v-model="apf.address1" label="Address Details" class="col-lg-6" required></dbinput>
+          <dbinput type="textarea" v-model="apf.address2" label="Additional Address Information " class="col-lg-6"></dbinput>
+          <dbinput type="textarea" v-model="apf.onote" label="Order Note" class="col-lg-6"></dbinput>
+	      		</div>
+	      		<div class="row">
+	      			<dbtable
+          class="table-responsive col-12"
+          name="crttble"
+          :sql="`select pid,psz,pgst,pname,pqty,@pamt:=(posp*pqty) as pamt,ROUND((pgst/100)*@pamt,2) as gstamt,pmrp,posp,itmid,extras from orders where ordsts = 'P' and uid='<?=getUserId('eid')?>'`"
+          :fcol="['pname']"
+          :dcol="{pname:'Particulars',pqty:'Qty',pamt:'Price'}"
+          :wcol="{pqty:'100px'}"
+          :editable="false"
+          @delete="(df)=>{df();}"
+          >
+          <div slot="pname" slot-scope="rdata" class="product-thumbnail" >
+             <img class="pimg" :src="get_url(`upload/products/${rdata.rval.pid}/pimage.png`)">
+             <div class="productDiscription">
+ <h5>{{rdata.rval.pname}}</h5>
+ <p>
+ <strong>Size:</strong> {{rdata.rval.psz}}
+ </p>
+ <div>
+ <strong>Qty: </strong>
+ <div style="display: inline-block;max-width: 100%">
+ <div style="display: grid;grid-template-columns: auto 1fr auto">
+ <button type="button" class="addbtn" @click="subQty(rdata.rval.itmid,rdata.rval)" >-</button>
+             	<span style="text-align: center;padding: 10;">{{rdata.rval.pqty}}</span>
+             	<button type="button" class="addbtn" @click="addQty(rdata.rval.itmid,rdata.rval)">+</button>
+ </div>
+ </div>
+ </div>
+ <div>
+ <strong>Amount:</strong>
+ <span>{{rdata.rval.pamt.toCur(true)}}</span>
+ </div>
+ <div class="tpng" v-if="getExtras(rdata.rval.extras)['Toppings']!=''">
+ <b >Toppings</b>: {{getExtras(rdata.rval.extras)['Toppings']}}
+ </div>
+ <div class="crst" v-if="getExtras(rdata.rval.extras)['Crust']!=''">
+ <b >Crust</b>: {{getExtras(rdata.rval.extras)['Crust']}}
+ </div>
+             </div>
+          </div>
+          <template slot="foot" slot-scope="fd">
+             <tr>
+                <th colspan="3" style="text-align: right;">Total {{fd.row.col('pamt').sum().toCur(true)}}</th>
+             </tr>
+          </template>
+       </dbtable>
+	      		</div>
+	      	</div>
+	      	<div class="col-lg-5 col-12">
+	      		<div class="row">
+	      			<div class="col-12">
+	      				<table style="width: 100%">
+       				<tbody v-if="t$('#crttble').node&&isset(t$('#crttble').node.vue)" >
+       					<tr>
+       						<th  colspan="2" style="font-size: x-large;padding: 10px;border-radius: 4px 4px 0px 0px;">Cart Summary</th>
+       					</tr>
+       					<tr>
+       						<th colspan="2">
+       							 <dbsearch :searchable="false" name="cpn" sql="SELECT * from coupons where CURDATE()>=cpnvf and CURDATE()<=cpnvt" fcol="cpname" class="" placeholder="Coupon code" type="select" v-model="apf.cpname" label="Apply Coupon" @select ="fillcoupon" ></dbsearch>
+       						</th>
+       					</tr>
+       					<tr style="font-size: large;">
+       						<td>Net Price</td>
+       						<td> {{billamt(t$('#crttble').node.vue.row).toCur(true)}}</td>
+       					</tr>
+       					<tr style="font-size: large;" >
+       						<td>Coupon Discount</td>
+       						<td>- {{cpnamt(t$('#crttble').node.vue.row).amt.toCur(true)}}</td>
+       					</tr>
+       					<tr style="font-size: large;" >
+       						<td>CGST</td>
+       						<td>+ {{(gstamt(t$('#crttble').node.vue.row)/2).toCur(2)}}</td>
+       					</tr>
+       					<tr style="font-size: large;" >
+       						<td>SGST</td>
+       						<td>+ {{(gstamt(t$('#crttble').node.vue.row)/2).toCur(2)}}</td>
+       					</tr>
+       					<tr style="font-size: x-large;" >
+       						<td>Total</td>
+       						<td>{{disamt(t$('#crttble').node.vue.row).toCur(true)}}</td>
+       					</tr>
+       					<tr >
+       						<td colspan="2">
+       							<button class="checkout" >Proceed to Checkout</button>
+       						</td>
+       					</tr>
+       				</tbody>
+       			</table>
+	      			</div>
+	      		</div>
+	      	</div>   
+	      </form>
+	    </div>
+	</main>
+	<div id="cd-shadow-layer"></div>
+</div>

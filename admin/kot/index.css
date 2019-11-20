@@ -1,0 +1,23 @@
+#cardsss {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    width: 11.77in;
+}
+
+h1 {
+    text-align: center;
+    font-size: xx-large !important;
+    margin-bottom: 10px !important;
+    font-weight: bolder !important;
+}
+
+.btn {
+    width: fit-content !important;
+    position: absolute;
+    right: 0;
+}
+
+.card {
+    min-width: 350px !important;
+    position: relative;
+    padding-bottom: 45px;
+}
